@@ -1,0 +1,1 @@
+Entorno is a 2D platformer game. It's my project for a game development course at FMI.
