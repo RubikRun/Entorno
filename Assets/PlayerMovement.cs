@@ -46,11 +46,25 @@ public class PlayerMovement : MonoBehaviour
             );
         }
         // Set animator parameter to indicate if player is currently running
-        animator.SetBool("isRunning", horizontalMove != 0);
+        animator.SetBool("isRunning", !Mathf.Approximately(horizontalMove, 0f));
         // Handle jumping
         if (Input.GetButtonDown("Jump"))
         {
             rigidBody.velocity = new Vector2(rigidBody.velocity.x, jumpPower);
+            animator.SetBool("isJumping", true);
         }
+        else
+        {
+            animator.SetBool("isJumping", false);
+        }
+
+        animator.SetBool("isFalling", Mathf.Abs(rigidBody.velocity.y) > 10f);
+        animator.SetBool("isFlying", Mathf.Abs(rigidBody.velocity.y) <= 10f && !compareFloats(rigidBody.velocity.y, 0f));
+        print(rigidBody.velocity.y);
+    }
+
+    private bool compareFloats(float a, float b, float delta = 0.000001f)
+    {
+        return (Mathf.Abs(a - b) < delta);
     }
 }
