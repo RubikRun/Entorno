@@ -11,10 +11,13 @@ public class PlayerMovement : MonoBehaviour
 
     private Rigidbody2D rigidBody;
 
+    Animator animator;
+
     // Start is called before the first frame update
     void Start()
     {
         rigidBody = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -23,6 +26,27 @@ public class PlayerMovement : MonoBehaviour
         // Handle horizontal movement
         float horizontalMove = Input.GetAxis("Horizontal");
         rigidBody.velocity = new Vector2(horizontalMove * speed, rigidBody.velocity.y);
+        // Check if player is running left or right and accordingly flip the player horizontally
+        if (horizontalMove > 0)
+        {
+            transform.localScale = new Vector3
+            (
+                Mathf.Abs(transform.localScale.x),
+                transform.localScale.y,
+                transform.localScale.z
+            );
+        }
+        else if (horizontalMove < 0)
+        {
+            transform.localScale = new Vector3
+            (
+                -Mathf.Abs(transform.localScale.x),
+                transform.localScale.y,
+                transform.localScale.z
+            );
+        }
+        // Set animator parameter to indicate if player is currently running
+        animator.SetBool("isRunning", horizontalMove != 0);
         // Handle jumping
         if (Input.GetButtonDown("Jump"))
         {
