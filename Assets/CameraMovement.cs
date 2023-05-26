@@ -20,7 +20,7 @@ public class CameraMovement : MonoBehaviour
     void Update()
     {
         // Make the camera follow Player horizontally
-        Vector3 targetPosition = new Vector3(target.position.x, target.position.y, -10f);
+        Vector3 targetPosition = new Vector3(target.position.x, target.position.y + 2, -10f);
         transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref velocity, smoothTime);
     }
 }
