@@ -44,6 +44,9 @@ TagManager:
   - name: BackEnv
     uniqueID: 3444532137
     locked: 0
+  - name: Animals
+    uniqueID: 4052199359
+    locked: 0
   - name: Player
     uniqueID: 284001175
     locked: 0

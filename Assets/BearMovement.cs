@@ -11,6 +11,17 @@ public class BearMovement : MonoBehaviour
 
     Animator animator;
 
+    const int waddleTimeInterval = 900;
+    int waddleTimeToNextState = waddleTimeInterval;
+    enum WaddleState
+    {
+        Standing,
+        WalkingLeft,
+        WalkingRight
+    };
+    WaddleState waddleState = WaddleState.Standing;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -49,6 +60,28 @@ public class BearMovement : MonoBehaviour
 
     float getHorizontalMove()
     {
-        return 1f;
+        return waddle();
+    }
+
+    float waddle()
+    {
+        if (waddleTimeToNextState <= 0)
+        {
+            int newStateIndex = Random.Range(0, 3);
+            waddleState = (WaddleState)newStateIndex;
+            waddleTimeToNextState = waddleTimeInterval;
+        }
+        waddleTimeToNextState--;
+
+        if (waddleState == WaddleState.WalkingRight)
+        {
+            return 1f;
+        }
+        else if (waddleState == WaddleState.WalkingLeft)
+        {
+            return -1f;
+        }
+
+        return 0f;
     }
 }
