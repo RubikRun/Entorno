@@ -5,38 +5,43 @@ using UnityEngine;
 public class BearMovement : MonoBehaviour
 {
     // Speed of horizontal movement
-    private float speed = 1f;
+    private float walkingSpeed = 1f;
+    private float runningSpeed = 3.4f;
 
     private Rigidbody2D rigidBody;
 
     Animator animator;
 
-    const int waddleTimeInterval = 900;
-    int waddleTimeToNextState = waddleTimeInterval;
-    enum WaddleState
+    GameObject player;
+
+    const int wanderTimeInterval = 500;
+    int wanderTimeToNextState = wanderTimeInterval;
+    enum WanderState
     {
         Standing,
         WalkingLeft,
         WalkingRight
     };
-    WaddleState waddleState = WaddleState.Standing;
+    WanderState wanderState = WanderState.Standing;
 
+    float fieldOfView = 8f;
 
     // Start is called before the first frame update
     void Start()
     {
         rigidBody = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        player = GameObject.Find("Player");
     }
 
     // Update is called once per frame
     void Update()
     {
         // Handle horizontal movement
-        float horizontalMove = getHorizontalMove();
-        rigidBody.velocity = new Vector2(horizontalMove * speed, rigidBody.velocity.y);
+        float horizontalVelocity = getHorizontalVelocity();
+        rigidBody.velocity = new Vector2(horizontalVelocity, rigidBody.velocity.y);
         // Check if bear is walking/running left or right and accordingly flip the bear horizontally
-        if (horizontalMove > 0)
+        if (horizontalVelocity > 0)
         {
             transform.localScale = new Vector3
             (
@@ -45,7 +50,7 @@ public class BearMovement : MonoBehaviour
                 transform.localScale.z
             );
         }
-        else if (horizontalMove < 0)
+        else if (horizontalVelocity < 0)
         {
             transform.localScale = new Vector3
             (
@@ -54,30 +59,60 @@ public class BearMovement : MonoBehaviour
                 transform.localScale.z
             );
         }
-        // Set animator parameter to indicate if bear is currently walking
-        animator.SetBool("isWalking", !Mathf.Approximately(horizontalMove, 0f));
+        // Set animator parameters to indicate if bear is currently standing, walking or running
+        animator.SetBool("isStanding", Mathf.Approximately(horizontalVelocity, 0f));
+        animator.SetBool("isWalking", !Mathf.Approximately(horizontalVelocity, 0f) && Mathf.Abs(horizontalVelocity) <= 1f);
+        animator.SetBool("isRunning", Mathf.Abs(horizontalVelocity) > 1f);
+    }
+
+    float getHorizontalVelocity()
+    {
+        float horizontalMove = getHorizontalMove();
+        if (Mathf.Abs(horizontalMove) > 1f)
+        {
+            return Mathf.Sign(horizontalMove) * runningSpeed;
+        }
+        return horizontalMove * walkingSpeed;
     }
 
     float getHorizontalMove()
     {
-        return waddle();
+        if (isPlayerInFieldOfView())
+        {
+            return runTowardsPlayer();
+        }
+        return wander();
     }
 
-    float waddle()
+    bool isPlayerInFieldOfView()
     {
-        if (waddleTimeToNextState <= 0)
+        return Mathf.Abs(player.transform.position.x - transform.position.x) < fieldOfView;
+    }
+
+    float runTowardsPlayer()
+    {
+        if (player.transform.position.x - transform.position.x > 0f)
+        {
+            return 2f;
+        }
+        return -2f;
+    }
+
+    float wander()
+    {
+        if (wanderTimeToNextState <= 0)
         {
             int newStateIndex = Random.Range(0, 3);
-            waddleState = (WaddleState)newStateIndex;
-            waddleTimeToNextState = waddleTimeInterval;
+            wanderState = (WanderState)newStateIndex;
+            wanderTimeToNextState = wanderTimeInterval;
         }
-        waddleTimeToNextState--;
+        wanderTimeToNextState--;
 
-        if (waddleState == WaddleState.WalkingRight)
+        if (wanderState == WanderState.WalkingRight)
         {
             return 1f;
         }
-        else if (waddleState == WaddleState.WalkingLeft)
+        else if (wanderState == WanderState.WalkingLeft)
         {
             return -1f;
         }
