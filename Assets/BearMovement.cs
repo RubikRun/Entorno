@@ -14,6 +14,8 @@ public class BearMovement : MonoBehaviour
 
     GameObject player;
 
+    PlayerHealth playerHealth;
+
     const int wanderTimeInterval = 500;
     int wanderTimeToNextState = wanderTimeInterval;
     enum WanderState
@@ -24,7 +26,9 @@ public class BearMovement : MonoBehaviour
     };
     WanderState wanderState = WanderState.Standing;
 
-    float fieldOfView = 8f;
+    float fieldOfView = 7f;
+
+    const float hitDistance = 1f;
 
     // Start is called before the first frame update
     void Start()
@@ -32,6 +36,7 @@ public class BearMovement : MonoBehaviour
         rigidBody = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         player = GameObject.Find("Player");
+        playerHealth = player.GetComponent<PlayerHealth>();
     }
 
     // Update is called once per frame
@@ -63,6 +68,18 @@ public class BearMovement : MonoBehaviour
         animator.SetBool("isStanding", Mathf.Approximately(horizontalVelocity, 0f));
         animator.SetBool("isWalking", !Mathf.Approximately(horizontalVelocity, 0f) && Mathf.Abs(horizontalVelocity) <= 1f);
         animator.SetBool("isRunning", Mathf.Abs(horizontalVelocity) > 1f);
+
+        tryHitPlayer();
+    }
+
+    bool tryHitPlayer()
+    {
+        if (Mathf.Abs(player.transform.position.x - transform.position.x) < hitDistance)
+        {
+            playerHealth.HitByBear();
+            return true;
+        }
+        return false;
     }
 
     float getHorizontalVelocity()
