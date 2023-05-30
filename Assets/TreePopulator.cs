@@ -27,7 +27,8 @@ public class TreePopulator : MonoBehaviour
 
     void createTree(float xPosition)
     {
-        bool backOrFront = Random.Range(0f, 1f) > 0.5f;
+        const float probabilityOfFrontTree = 0.3f;
+        bool backOrFront = Random.Range(0f, 1f) > probabilityOfFrontTree;
 
         GameObject treeObject = new GameObject("Tree" + xPosition.ToString());
         treeObject.transform.parent = transform;
