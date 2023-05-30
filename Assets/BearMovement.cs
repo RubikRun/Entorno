@@ -77,8 +77,10 @@ public class BearMovement : MonoBehaviour
         if (Mathf.Abs(player.transform.position.x - transform.position.x) < hitDistance)
         {
             playerHealth.HitByBear();
+            animator.SetBool("isAttacking", true);
             return true;
         }
+        animator.SetBool("isAttacking", false);
         return false;
     }
 
