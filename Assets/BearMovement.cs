@@ -18,6 +18,12 @@ public class BearMovement : MonoBehaviour
 
     const int wanderTimeInterval = 500;
     int wanderTimeToNextState = wanderTimeInterval;
+
+    const float wanderRadius = 10f;
+
+    [SerializeField]
+    Vector2 initialPosition = Vector2.zero;
+
     enum WanderState
     {
         Standing,
@@ -37,6 +43,8 @@ public class BearMovement : MonoBehaviour
         animator = GetComponent<Animator>();
         player = GameObject.Find("Player");
         playerHealth = player.GetComponent<PlayerHealth>();
+
+        initialPosition = transform.localPosition;
     }
 
     // Update is called once per frame
@@ -44,6 +52,7 @@ public class BearMovement : MonoBehaviour
     {
         // Handle horizontal movement
         float horizontalVelocity = getHorizontalVelocity();
+
         rigidBody.velocity = new Vector2(horizontalVelocity, rigidBody.velocity.y);
         // Check if bear is walking/running left or right and accordingly flip the bear horizontally
         if (horizontalVelocity > 0)
@@ -121,8 +130,28 @@ public class BearMovement : MonoBehaviour
     {
         if (wanderTimeToNextState <= 0)
         {
-            int newStateIndex = Random.Range(0, 3);
-            wanderState = (WanderState)newStateIndex;
+            bool doWalkTowardsInitial = false;
+            if (Mathf.Abs(initialPosition.x - transform.localPosition.x) > wanderRadius)
+            {
+                const float probToWalkTowardsInitial = 0.9f;
+                doWalkTowardsInitial = (Random.Range(0f, 1f) < probToWalkTowardsInitial);
+            }
+            if (doWalkTowardsInitial)
+            {
+                if (initialPosition.x < transform.localPosition.x)
+                {
+                    wanderState = WanderState.WalkingLeft;
+                }
+                else
+                {
+                    wanderState = WanderState.WalkingRight;
+                }
+            }
+            else
+            {
+                int newStateIndex = Random.Range(0, 3);
+                wanderState = (WanderState)newStateIndex;
+            }
             wanderTimeToNextState = wanderTimeInterval;
         }
         wanderTimeToNextState--;
