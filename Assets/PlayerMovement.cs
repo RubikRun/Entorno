@@ -6,8 +6,8 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     // Speed of horizontal movement
-    private float speed = 6f;
-    private float jumpPower = 6f;
+    public float speed = 6f;
+    public float jumpPower = 6f;
 
     private Rigidbody2D rigidBody;
 
