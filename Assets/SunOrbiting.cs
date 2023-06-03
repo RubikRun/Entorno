@@ -18,6 +18,8 @@ public class SunOrbiting : MonoBehaviour
 
     public float sunAngle = 0f;
 
+    public float elipseFactor = 0.5f;
+
     GameObject player;
 
     // Start is called before the first frame update
@@ -70,7 +72,7 @@ public class SunOrbiting : MonoBehaviour
 
         Vector3 sunPosition = new Vector3(
             playerPos.x + Mathf.Cos(sunAngle) * orbitRadius,
-            playerPos.y + Mathf.Sin(sunAngle) * orbitRadius,
+            (groundLevel + Mathf.Sin(sunAngle) * orbitRadius) * elipseFactor,
             0f
         );
 
