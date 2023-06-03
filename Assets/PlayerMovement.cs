@@ -9,6 +9,12 @@ public class PlayerMovement : MonoBehaviour
     public float speed = 6f;
     public float jumpPower = 6f;
 
+    public float birdHorizontalSpeed = 5f;
+    public float birdVerticalSpeed = 0.3f;
+    public float birdMaxVerticalVelocity = 8f;
+
+    public float birdGravityScale = 0.1f;
+
     private Rigidbody2D rigidBody;
 
     Animator animator;
@@ -23,6 +29,24 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (animator.GetBool("isHuman"))
+        {
+            UpdateAsHuman();
+        }
+        else if (animator.GetBool("isBird"))
+        {
+            UpdateAsBird();
+        }
+        else
+        {
+            UpdateAsHuman();
+        }
+    }
+
+    void UpdateAsHuman()
+    {
+        rigidBody.gravityScale = 1f;
+
         // Handle horizontal movement
         float horizontalMove = Input.GetAxis("Horizontal");
         rigidBody.velocity = new Vector2(horizontalMove * speed, rigidBody.velocity.y);
@@ -60,6 +84,31 @@ public class PlayerMovement : MonoBehaviour
 
         animator.SetBool("isFalling", Mathf.Abs(rigidBody.velocity.y) > 10f);
         animator.SetBool("isJumpFlying", Mathf.Abs(rigidBody.velocity.y) <= 10f && !compareFloats(rigidBody.velocity.y, 0f));
+    }
+
+    void UpdateAsBird()
+    {
+        rigidBody.gravityScale = birdGravityScale;
+
+        // Handle horizontal movement
+        float horizontalMove = Input.GetAxis("Horizontal");
+        rigidBody.velocity = new Vector2(horizontalMove * birdHorizontalSpeed, rigidBody.velocity.y);
+        // Handle vertical movement
+        float verticalMove = Input.GetAxis("Vertical");
+        rigidBody.velocity = new Vector2(
+            rigidBody.velocity.x,
+            rigidBody.velocity.y + verticalMove * birdVerticalSpeed * fLimitFlying(rigidBody.velocity.y / birdMaxVerticalVelocity)
+        );
+    }
+
+    void UpdateAsFish()
+    {
+
+    }
+
+    private float fLimitFlying(float x)
+    {
+        return 1f - Mathf.Clamp01(Mathf.Pow(x, 11f));
     }
 
     private bool compareFloats(float a, float b, float delta = 0.000001f)
