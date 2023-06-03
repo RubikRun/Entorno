@@ -134,6 +134,7 @@ GameObject:
   - component: {fileID: 59626014}
   - component: {fileID: 59626013}
   - component: {fileID: 59626015}
+  - component: {fileID: 59626016}
   m_Layer: 0
   m_Name: Sun
   m_TagString: Untagged
@@ -182,7 +183,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 9c224fcab8e48c8409013c0b8079def8, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 6ee53bea430010f4db716555ba4db105, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -220,7 +221,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a97afbc936382624d9d7d04b46e337ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tick: 1
+  tick: 15
   mins: 0
   hours: 4
   days: 1
@@ -229,6 +230,21 @@ MonoBehaviour:
   orbitRadius: 15
   sunAngle: 0
   elipseFactor: 0.8
+--- !u!114 &59626016
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 59626012}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56b95afcb039c06468402c9832caaf02, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  yellowSprite: {fileID: 21300000, guid: 9c224fcab8e48c8409013c0b8079def8, type: 3}
+  redSprite: {fileID: 21300000, guid: 24c91be68a417fa4b8d40c854f31ca9f, type: 3}
+  blueSprite: {fileID: 21300000, guid: 6ee53bea430010f4db716555ba4db105, type: 3}
 --- !u!1 &227225046
 GameObject:
   m_ObjectHideFlags: 0
@@ -342,7 +358,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -769, y: 375.75}
+  m_AnchoredPosition: {x: -791.7, y: 620.18}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &315995678
@@ -370,6 +386,7 @@ GameObject:
   - component: {fileID: 369655289}
   - component: {fileID: 369655288}
   - component: {fileID: 369655291}
+  - component: {fileID: 369655292}
   m_Layer: 0
   m_Name: SunLight
   m_TagString: Untagged
@@ -389,7 +406,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a97afbc936382624d9d7d04b46e337ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tick: 1
+  tick: 15
   mins: 0
   hours: 4
   days: 1
@@ -414,7 +431,7 @@ MonoBehaviour:
   m_LightType: 1
   m_BlendStyleIndex: 0
   m_FalloffIntensity: 0.39
-  m_Color: {r: 0.9245283, g: 0.8658996, b: 0, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 7
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
@@ -2938,9 +2955,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 369655287}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 56b95afcb039c06468402c9832caaf02, type: 3}
+  m_Script: {fileID: 11500000, guid: 63c8ab7bdbca546499d20b44cf3be127, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &369655292
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 369655287}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46da2ce5e8c466c4ab8bf881767f1238, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  yellowColor: {r: 0.99647444, g: 1, b: 0.24905658, a: 1}
+  redColor: {r: 0.9433962, g: 0.32197624, b: 0.18155923, a: 1}
+  blueColor: {r: 0.23001064, g: 0.41506284, b: 0.8584906, a: 1}
 --- !u!1 &457677003
 GameObject:
   m_ObjectHideFlags: 0

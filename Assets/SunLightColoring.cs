@@ -1,25 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
-public class SunColoring : MonoBehaviour
+public class SunLightColoring : MonoBehaviour
 {
-    [SerializeField]
-    Sprite yellowSprite;
-
-    [SerializeField]
-    Sprite redSprite;
-
-    [SerializeField]
-    Sprite blueSprite;
+    public Color yellowColor;
+    public Color redColor;
+    public Color blueColor;
 
     private SunOrbiting sunOrbiting;
 
-    private SpriteRenderer spriteRenderer;
+    private Light2D lightComp;
     // Start is called before the first frame update
     void Start()
     {
-        spriteRenderer = GetComponent<SpriteRenderer>();
+        lightComp = GetComponent<Light2D>();
         sunOrbiting = GetComponent<SunOrbiting>();
     }
 
@@ -28,15 +24,15 @@ public class SunColoring : MonoBehaviour
     {
         if (sunOrbiting.days % 3 == 0)
         {
-            spriteRenderer.sprite = blueSprite;
+            lightComp.color = blueColor;
         }
         else if (sunOrbiting.days % 3 == 1)
         {
-            spriteRenderer.sprite = yellowSprite;
+            lightComp.color = yellowColor;
         }
         else
         {
-            spriteRenderer.sprite = redSprite;
+            lightComp.color = redColor;
         }
     }
 }
