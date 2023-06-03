@@ -183,7 +183,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0, g: 0.5529412, b: 1, a: 1}
+  m_Color: {r: 0, g: 0.46041775, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -220,7 +220,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e3169012215e71408f802df680dc20c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  yellowColor: {r: 0, g: 0.5529412, b: 1, a: 1}
+  yellowColor: {r: 0, g: 0.45882356, b: 1, a: 1}
   redColor: {r: 0.62352943, g: 0.72156864, b: 0.8313726, a: 1}
   blueColor: {r: 0.2392157, g: 0.76470596, b: 0.6039216, a: 1}
   beginHourOfChange: 0
@@ -323,11 +323,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a97afbc936382624d9d7d04b46e337ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tick: 5
+  tick: 2
   mins: 0
-  hours: 6
+  hours: 4
   days: 2
-  nightFasterFactor: 8
+  nightFasterFactor: 6
   groundLevel: -3
   orbitRadius: 15
   sunAngle: 0
@@ -508,11 +508,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a97afbc936382624d9d7d04b46e337ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tick: 5
+  tick: 2
   mins: 0
-  hours: 6
+  hours: 4
   days: 2
-  nightFasterFactor: 8
+  nightFasterFactor: 6
   groundLevel: -3
   orbitRadius: 200
   sunAngle: 0
@@ -3226,10 +3226,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 6
   jumpPower: 6
-  birdHorizontalSpeed: 5
+  birdHorizontalSpeed: 7
   birdVerticalSpeed: 0.3
   birdMaxVerticalVelocity: 6
-  birdGravityScale: 0.3
+  birdGravityScale: 0.2
 --- !u!95 &457677010
 Animator:
   serializedVersion: 5

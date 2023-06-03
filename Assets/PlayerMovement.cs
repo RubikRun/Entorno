@@ -9,13 +9,14 @@ public class PlayerMovement : MonoBehaviour
     public float speed = 6f;
     public float jumpPower = 6f;
 
-    public float birdHorizontalSpeed = 5f;
-    public float birdVerticalSpeed = 0.3f;
+    public float birdHorizontalSpeed = 8f;
+    public float birdVerticalSpeed = 0.2f;
     public float birdMaxVerticalVelocity = 8f;
 
-    public float birdGravityScale = 0.1f;
+    public float birdGravityScale = 0.3f;
 
     private Rigidbody2D rigidBody;
+    private SunOrbiting sunOrbiting;
 
     Animator animator;
 
@@ -24,6 +25,9 @@ public class PlayerMovement : MonoBehaviour
     {
         rigidBody = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+
+        GameObject sun = GameObject.Find("Sun");
+        sunOrbiting = sun.GetComponent<SunOrbiting>();
     }
 
     // Update is called once per frame
@@ -97,8 +101,32 @@ public class PlayerMovement : MonoBehaviour
         float verticalMove = Input.GetAxis("Vertical");
         rigidBody.velocity = new Vector2(
             rigidBody.velocity.x,
-            rigidBody.velocity.y + verticalMove * birdVerticalSpeed * fLimitFlying(rigidBody.velocity.y / birdMaxVerticalVelocity)
+            Mathf.Clamp(
+                rigidBody.velocity.y + verticalMove * birdVerticalSpeed
+                    * fLimitFlying(rigidBody.velocity.y / birdMaxVerticalVelocity),
+                -birdMaxVerticalVelocity,
+                birdMaxVerticalVelocity
+            )
         );
+
+        if (Mathf.Approximately(rigidBody.velocity.x, 0f) && Mathf.Approximately(rigidBody.velocity.y, 0f))
+        {
+            transform.SetLocalPositionAndRotation(
+                transform.localPosition,
+                Quaternion.identity
+            );
+        }
+        else
+        {
+            transform.SetLocalPositionAndRotation(
+                transform.localPosition,
+                Quaternion.Euler(
+                    0f,
+                    0f,
+                    Mathf.Rad2Deg * (Mathf.Atan2(rigidBody.velocity.y, rigidBody.velocity.x) - Mathf.PI / 2f)
+                )
+            );
+        }
     }
 
     void UpdateAsFish()
