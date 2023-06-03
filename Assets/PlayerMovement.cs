@@ -59,7 +59,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         animator.SetBool("isFalling", Mathf.Abs(rigidBody.velocity.y) > 10f);
-        animator.SetBool("isFlying", Mathf.Abs(rigidBody.velocity.y) <= 10f && !compareFloats(rigidBody.velocity.y, 0f));
+        animator.SetBool("isJumpFlying", Mathf.Abs(rigidBody.velocity.y) <= 10f && !compareFloats(rigidBody.velocity.y, 0f));
     }
 
     private bool compareFloats(float a, float b, float delta = 0.000001f)
