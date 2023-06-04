@@ -50,6 +50,10 @@ public class PlayerMovement : MonoBehaviour
     void UpdateAsHuman()
     {
         rigidBody.gravityScale = 1f;
+        transform.SetLocalPositionAndRotation(
+            transform.localPosition,
+            Quaternion.identity
+        );
 
         // Handle horizontal movement
         float horizontalMove = Input.GetAxis("Horizontal");
