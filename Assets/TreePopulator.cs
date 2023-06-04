@@ -5,18 +5,19 @@ using UnityEngine;
 
 public class TreePopulator : MonoBehaviour
 {
-    [SerializeField]
-    Sprite sprite;
-
-    const float treeScale = 2f;
+    GameObject treeOriginal;
 
     // Start is called before the first frame update
     void Start()
     {
+        treeOriginal = GameObject.Find("TreeOriginal");
+
         for (float x = -50f; x <= 50f; x += 8f)
         {
             createTree(x);
         }
+
+        GameObject.Destroy(treeOriginal);
     }
 
     // Update is called once per frame
@@ -30,17 +31,15 @@ public class TreePopulator : MonoBehaviour
         const float probabilityOfFrontTree = 0.3f;
         bool backOrFront = Random.Range(0f, 1f) > probabilityOfFrontTree;
 
-        GameObject treeObject = new GameObject("Tree" + xPosition.ToString());
-        treeObject.transform.parent = transform;
-        treeObject.transform.localScale = new Vector3(treeScale, treeScale, treeScale);
-        treeObject.transform.localPosition = new Vector3(
+        GameObject treeClone = Instantiate(treeOriginal, transform);
+        treeClone.name = "Tree" + xPosition.ToString();
+        treeClone.transform.localPosition = new Vector3(
             xPosition,
-            sprite.bounds.size.y * treeScale * (backOrFront ? 0.98f : 0.93f) / 2f,
-            0f
+            treeOriginal.transform.localPosition.y - (backOrFront ? 0f : 0.2f),
+            0
         );
 
-        SpriteRenderer spriteRenderer = treeObject.AddComponent<SpriteRenderer>();
-        spriteRenderer.sprite = sprite;
+        SpriteRenderer spriteRenderer = treeClone.GetComponent<SpriteRenderer>();
         if (backOrFront)
         {
             spriteRenderer.sortingLayerName = "BackEnv";
