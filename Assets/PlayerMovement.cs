@@ -147,11 +147,20 @@ public class PlayerMovement : MonoBehaviour
         else
         {
             UpdateAsHuman();
+            transform.SetLocalPositionAndRotation(
+                transform.localPosition,
+                Quaternion.Euler(
+                    0f,
+                    0f,
+                    90f
+                )
+            );
         }
     }
 
     bool IsInWater()
     {
+        isInWater = false;
         foreach (Transform waterChildTr in water.transform)
         {
             GameObject waterChild = waterChildTr.gameObject;
@@ -159,11 +168,13 @@ public class PlayerMovement : MonoBehaviour
             if (waterChildSR.bounds.Contains(transform.position))
             {
                 isInWater = true;
-                return true;
+                break;
             }
         }
-        isInWater = false;
-        return false;
+
+        animator.SetBool("inWater", isInWater);
+
+        return isInWater;
     }
 
     private float fLimitFlying(float x)
