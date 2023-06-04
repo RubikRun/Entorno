@@ -19,20 +19,22 @@ public class PlayerAnimalForms : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        animator.SetBool("isHuman",
-            (sunOrbiting.days % 3 == 1 && sunOrbiting.hours >= 6)
-            ||
-            (sunOrbiting.days % 3 == 2 && sunOrbiting.hours < 6)
-        );
-        animator.SetBool("isBird",
-            (sunOrbiting.days % 3 == 2 && sunOrbiting.hours >= 6)
-            ||
-            (sunOrbiting.days % 3 == 0 && sunOrbiting.hours < 6)
-        );
-        animator.SetBool("isFish",
-            (sunOrbiting.days % 3 == 0 && sunOrbiting.hours >= 6)
-            ||
-            (sunOrbiting.days % 3 == 1 && sunOrbiting.hours < 6)
-        );
+        bool isHuman = (sunOrbiting.days % 3 == 1 && sunOrbiting.hours >= 6)
+            || (sunOrbiting.days % 3 == 2 && sunOrbiting.hours < 6);
+        bool isBird = (sunOrbiting.days % 3 == 2 && sunOrbiting.hours >= 6)
+            || (sunOrbiting.days % 3 == 0 && sunOrbiting.hours < 6);
+        bool isFish = (sunOrbiting.days % 3 == 0 && sunOrbiting.hours >= 6)
+            || (sunOrbiting.days % 3 == 1 && sunOrbiting.hours < 6);
+
+        bool wasHuman = animator.GetBool("isHuman");
+        bool wasBird = animator.GetBool("isBird");
+        bool wasFish = animator.GetBool("isFish");
+
+        animator.SetBool("isHuman", isHuman);
+        animator.SetBool("isBird", isBird);
+        animator.SetBool("isFish", isFish);
+
+        bool isTransforming = (isHuman != wasHuman || isBird != wasBird || isFish != wasFish);
+        animator.SetBool("isTransforming", isTransforming);
     }
 }

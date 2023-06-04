@@ -323,10 +323,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a97afbc936382624d9d7d04b46e337ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tick: 2
+  tick: 10
   mins: 0
-  hours: 16
-  days: 2
+  hours: 9
+  days: 1
   nightFasterFactor: 6
   groundLevel: -3
   orbitRadius: 15
@@ -508,10 +508,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a97afbc936382624d9d7d04b46e337ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tick: 2
+  tick: 10
   mins: 0
-  hours: 16
-  days: 2
+  hours: 9
+  days: 1
   nightFasterFactor: 6
   groundLevel: -3
   orbitRadius: 200
