@@ -20,6 +20,9 @@ public class PlayerMovement : MonoBehaviour
 
     Animator animator;
 
+    GameObject water;
+    public bool isInWater = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -28,6 +31,8 @@ public class PlayerMovement : MonoBehaviour
 
         GameObject sun = GameObject.Find("Sun");
         sunOrbiting = sun.GetComponent<SunOrbiting>();
+
+        water = GameObject.Find("Water");
     }
 
     // Update is called once per frame
@@ -43,7 +48,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            UpdateAsHuman();
+            UpdateAsFish();
         }
     }
 
@@ -135,7 +140,30 @@ public class PlayerMovement : MonoBehaviour
 
     void UpdateAsFish()
     {
+        if (IsInWater())
+        {
+            UpdateAsBird();
+        }
+        else
+        {
+            UpdateAsHuman();
+        }
+    }
 
+    bool IsInWater()
+    {
+        foreach (Transform waterChildTr in water.transform)
+        {
+            GameObject waterChild = waterChildTr.gameObject;
+            SpriteRenderer waterChildSR = waterChild.GetComponent<SpriteRenderer>();
+            if (waterChildSR.bounds.Contains(transform.position))
+            {
+                isInWater = true;
+                return true;
+            }
+        }
+        isInWater = false;
+        return false;
     }
 
     private float fLimitFlying(float x)

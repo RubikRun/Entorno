@@ -323,10 +323,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a97afbc936382624d9d7d04b46e337ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tick: 10
+  tick: 2
   mins: 0
-  hours: 9
-  days: 1
+  hours: 0
+  days: 3
   nightFasterFactor: 6
   groundLevel: -3
   orbitRadius: 15
@@ -508,10 +508,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a97afbc936382624d9d7d04b46e337ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tick: 10
+  tick: 2
   mins: 0
-  hours: 9
-  days: 1
+  hours: 0
+  days: 3
   nightFasterFactor: 6
   groundLevel: -3
   orbitRadius: 200
@@ -3179,7 +3179,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 457677003}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.38, y: 0.99, z: 0}
+  m_LocalPosition: {x: 43.9, y: 0.99, z: 0}
   m_LocalScale: {x: 1.7963, y: 1.7963, z: 1.7963}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3230,6 +3230,7 @@ MonoBehaviour:
   birdVerticalSpeed: 0.3
   birdMaxVerticalVelocity: 6
   birdGravityScale: 0.2
+  isInWater: 0
 --- !u!95 &457677010
 Animator:
   serializedVersion: 5
@@ -3274,6 +3275,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b44de5b52453d942bd38ec96723736a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isHuman: 1
+  isBird: 0
+  isFish: 0
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -3372,6 +3376,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63fe7b685d8ec714aa6088b704289307, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tEnablingVertical: 0
+  deltaEnablingVertical: 0.003
 --- !u!114 &519420034
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4205,7 +4211,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1675967890}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 36902415504339a4bab1e3b89028eb83, type: 3}
   m_Name: 

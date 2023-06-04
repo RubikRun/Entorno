@@ -8,6 +8,10 @@ public class PlayerAnimalForms : MonoBehaviour
 
     private Animator animator;
 
+    public bool isHuman = true;
+    public bool isBird = false;
+    public bool isFish = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -19,16 +23,16 @@ public class PlayerAnimalForms : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        bool isHuman = (sunOrbiting.days % 3 == 1 && sunOrbiting.hours >= 6)
-            || (sunOrbiting.days % 3 == 2 && sunOrbiting.hours < 6);
-        bool isBird = (sunOrbiting.days % 3 == 2 && sunOrbiting.hours >= 6)
-            || (sunOrbiting.days % 3 == 0 && sunOrbiting.hours < 6);
-        bool isFish = (sunOrbiting.days % 3 == 0 && sunOrbiting.hours >= 6)
-            || (sunOrbiting.days % 3 == 1 && sunOrbiting.hours < 6);
+        bool wasHuman = isHuman;
+        bool wasBird = isBird;
+        bool wasFish = isFish;
 
-        bool wasHuman = animator.GetBool("isHuman");
-        bool wasBird = animator.GetBool("isBird");
-        bool wasFish = animator.GetBool("isFish");
+        isHuman = (sunOrbiting.days % 3 == 1 && sunOrbiting.hours >= 6)
+            || (sunOrbiting.days % 3 == 2 && sunOrbiting.hours < 6);
+        isBird = (sunOrbiting.days % 3 == 2 && sunOrbiting.hours >= 6)
+            || (sunOrbiting.days % 3 == 0 && sunOrbiting.hours < 6);
+        isFish = (sunOrbiting.days % 3 == 0 && sunOrbiting.hours >= 6)
+            || (sunOrbiting.days % 3 == 1 && sunOrbiting.hours < 6);
 
         animator.SetBool("isHuman", isHuman);
         animator.SetBool("isBird", isBird);
