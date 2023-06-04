@@ -15,6 +15,8 @@ public class PlayerMovement : MonoBehaviour
 
     public float birdGravityScale = 0.3f;
 
+    public float fishJumpPower = 2f;
+
     private Rigidbody2D rigidBody;
     private SunOrbiting sunOrbiting;
 
@@ -146,15 +148,27 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            UpdateAsHuman();
-            transform.SetLocalPositionAndRotation(
-                transform.localPosition,
-                Quaternion.Euler(
-                    0f,
-                    0f,
-                    90f
-                )
-            );
+            UpdateAsFishOutOfWater();
+        }
+    }
+
+    void UpdateAsFishOutOfWater()
+    {
+        rigidBody.gravityScale = 1f;
+        transform.SetLocalPositionAndRotation(
+            transform.localPosition,
+            Quaternion.Euler(
+                0f,
+                0f,
+                90f
+            )
+        );
+
+        // Handle fish dry jumping
+        float horizontalMove = Input.GetAxis("Horizontal");
+        if (Input.GetButtonDown("Jump") && Mathf.Abs(horizontalMove) >= 1f)
+        {
+            rigidBody.velocity = new Vector2(fishJumpPower * horizontalMove, fishJumpPower);
         }
     }
 
