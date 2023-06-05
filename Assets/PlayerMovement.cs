@@ -42,28 +42,71 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        bool isTransforming = animator.GetBool("isTransforming");
+
         if (animator.GetBool("isHuman"))
         {
+            if (isTransforming)
+            {
+                InitHumanForm();
+            }
             UpdateAsHuman();
         }
         else if (animator.GetBool("isBird"))
         {
+            if (isTransforming)
+            {
+                InitBirdForm();
+            }
             UpdateAsBird();
         }
         else
         {
+            if (isTransforming)
+            {
+                InitFishForm();
+            }
             UpdateAsFish();
         }
     }
 
-    void UpdateAsHuman()
+    void InitHumanForm()
     {
         rigidBody.gravityScale = 1f;
         transform.SetLocalPositionAndRotation(
             transform.localPosition,
             Quaternion.identity
         );
+    }
 
+    void InitBirdForm()
+    {
+        rigidBody.gravityScale = birdGravityScale;
+    }
+
+    void InitFishForm()
+    {
+        UpdateIsInWater();
+        if (isInWater)
+        {
+            InitBirdForm();
+        }
+        else
+        {
+            rigidBody.gravityScale = 1f;
+            transform.SetLocalPositionAndRotation(
+                transform.localPosition,
+                Quaternion.Euler(
+                    0f,
+                    0f,
+                    90f
+                )
+            );
+        }
+    }
+
+    void UpdateAsHuman()
+    {
         // Handle horizontal movement
         float horizontalMove = Input.GetAxis("Horizontal");
         rigidBody.velocity = new Vector2(horizontalMove * speed, rigidBody.velocity.y);
@@ -100,13 +143,11 @@ public class PlayerMovement : MonoBehaviour
         }
 
         animator.SetBool("isFalling", Mathf.Abs(rigidBody.velocity.y) > 10f);
-        animator.SetBool("isJumpFlying", Mathf.Abs(rigidBody.velocity.y) <= 10f && !compareFloats(rigidBody.velocity.y, 0f));
+        animator.SetBool("isJumpFlying", Mathf.Abs(rigidBody.velocity.y) <= 10f && !Mathf.Approximately(rigidBody.velocity.y, 0f));
     }
 
     void UpdateAsBird()
     {
-        rigidBody.gravityScale = birdGravityScale;
-
         // Handle horizontal movement
         float horizontalMove = Input.GetAxis("Horizontal");
         rigidBody.velocity = new Vector2(horizontalMove * birdHorizontalSpeed, rigidBody.velocity.y);
@@ -144,7 +185,14 @@ public class PlayerMovement : MonoBehaviour
 
     void UpdateAsFish()
     {
-        if (IsInWater())
+        bool wasInWater = isInWater;
+        UpdateIsInWater();
+        if (wasInWater != isInWater)
+        {
+            InitFishForm();
+        }
+
+        if (isInWater)
         {
             UpdateAsBird();
         }
@@ -156,16 +204,6 @@ public class PlayerMovement : MonoBehaviour
 
     void UpdateAsFishOutOfWater()
     {
-        rigidBody.gravityScale = 1f;
-        transform.SetLocalPositionAndRotation(
-            transform.localPosition,
-            Quaternion.Euler(
-                0f,
-                0f,
-                90f
-            )
-        );
-
         // Handle fish dry jumping
         float horizontalMove = Input.GetAxis("Horizontal");
         if (Input.GetButtonDown("Jump") && Mathf.Abs(horizontalMove) >= 1f && fishTimeSinceLastJump > fishTimeBetweenJumps)
@@ -173,11 +211,10 @@ public class PlayerMovement : MonoBehaviour
             rigidBody.velocity = new Vector2(fishJumpPower * horizontalMove, fishJumpPower);
             fishTimeSinceLastJump = 0;
         }
-
         fishTimeSinceLastJump++;
     }
 
-    bool IsInWater()
+    void UpdateIsInWater()
     {
         isInWater = false;
         foreach (Transform waterChildTr in water.transform)
@@ -192,17 +229,10 @@ public class PlayerMovement : MonoBehaviour
         }
 
         animator.SetBool("inWater", isInWater);
-
-        return isInWater;
     }
 
     private float fLimitFlying(float x)
     {
         return 1f - Mathf.Clamp01(Mathf.Pow(x, 11f));
-    }
-
-    private bool compareFloats(float a, float b, float delta = 0.000001f)
-    {
-        return (Mathf.Abs(a - b) < delta);
     }
 }
