@@ -16,6 +16,8 @@ public class PlayerMovement : MonoBehaviour
     public float birdGravityScale = 0.3f;
 
     public float fishJumpPower = 2f;
+    public int fishTimeBetweenJumps = 200;
+    private int fishTimeSinceLastJump = 9999999;
 
     private Rigidbody2D rigidBody;
     private SunOrbiting sunOrbiting;
@@ -166,10 +168,13 @@ public class PlayerMovement : MonoBehaviour
 
         // Handle fish dry jumping
         float horizontalMove = Input.GetAxis("Horizontal");
-        if (Input.GetButtonDown("Jump") && Mathf.Abs(horizontalMove) >= 1f)
+        if (Input.GetButtonDown("Jump") && Mathf.Abs(horizontalMove) >= 1f && fishTimeSinceLastJump > fishTimeBetweenJumps)
         {
             rigidBody.velocity = new Vector2(fishJumpPower * horizontalMove, fishJumpPower);
+            fishTimeSinceLastJump = 0;
         }
+
+        fishTimeSinceLastJump++;
     }
 
     bool IsInWater()
