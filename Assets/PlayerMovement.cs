@@ -20,12 +20,13 @@ public class PlayerMovement : MonoBehaviour
     private int fishTimeSinceLastJump = 9999999;
 
     private Rigidbody2D rigidBody;
-    private SunOrbiting sunOrbiting;
 
     Animator animator;
 
     GameObject water;
     public bool isInWater = false;
+
+    private bool isOnGround = false;
 
     // Start is called before the first frame update
     void Start()
@@ -34,7 +35,6 @@ public class PlayerMovement : MonoBehaviour
         animator = GetComponent<Animator>();
 
         GameObject sun = GameObject.Find("Sun");
-        sunOrbiting = sun.GetComponent<SunOrbiting>();
 
         water = GameObject.Find("Water");
     }
@@ -132,7 +132,7 @@ public class PlayerMovement : MonoBehaviour
         // Set animator parameter to indicate if player is currently running
         animator.SetBool("isRunning", !Mathf.Approximately(horizontalMove, 0f));
         // Handle jumping
-        if (Input.GetButtonDown("Jump"))
+        if (Input.GetButtonDown("Jump") && isOnGround)
         {
             rigidBody.velocity = new Vector2(rigidBody.velocity.x, jumpPower);
             animator.SetBool("isJumping", true);
@@ -229,6 +229,23 @@ public class PlayerMovement : MonoBehaviour
         }
 
         animator.SetBool("inWater", isInWater);
+    }
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            isOnGround = true;
+        }
+    }
+
+
+    void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            isOnGround = false;
+        }
     }
 
     private float fLimitFlying(float x)
