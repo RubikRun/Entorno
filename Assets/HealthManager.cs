@@ -35,4 +35,9 @@ public class HealthManager : MonoBehaviour
         healthAmount = Mathf.Clamp(healthAmount, 0, 100f);
         healthBar.fillAmount = healthAmount / 100f;
     }
+
+    public bool IsDead()
+    {
+        return healthAmount <= 0f;
+    }
 }

@@ -32,7 +32,7 @@ public class SharkMovement : MonoBehaviour
 
     float fieldOfView = 7f;
 
-    const float hitDistance = 1.4f;
+    const float hitDistance = 1.8f;
 
     GameObject water;
     public bool isInWater = false;
@@ -205,7 +205,6 @@ public class SharkMovement : MonoBehaviour
     void UpdateIsInWater()
     {
         isInWater = IsPositionInWater(transform.position);
-        animator.SetBool("inWater", isInWater);
     }
 
     bool IsPositionInWater(Vector3 position)
