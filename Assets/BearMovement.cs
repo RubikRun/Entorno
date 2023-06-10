@@ -5,8 +5,8 @@ using UnityEngine;
 public class BearMovement : MonoBehaviour
 {
     // Speed of horizontal movement
-    private float walkingSpeed = 1f;
-    private float runningSpeed = 3.4f;
+    public float walkingSpeed = 1f;
+    public float runningSpeed = 3.4f;
 
     private Rigidbody2D rigidBody;
 
@@ -16,8 +16,8 @@ public class BearMovement : MonoBehaviour
 
     PlayerHealth playerHealth;
 
-    const int wanderTimeInterval = 500;
-    int wanderTimeToNextState = wanderTimeInterval;
+    public int wanderTimeInterval = 500;
+    private int wanderTimeToNextState;
 
     const float wanderRadius = 10f;
 
@@ -45,6 +45,8 @@ public class BearMovement : MonoBehaviour
         playerHealth = player.GetComponent<PlayerHealth>();
 
         initialPosition = transform.localPosition;
+
+        wanderTimeToNextState = wanderTimeInterval;
     }
 
     // Update is called once per frame
@@ -75,8 +77,8 @@ public class BearMovement : MonoBehaviour
         }
         // Set animator parameters to indicate if bear is currently standing, walking or running
         animator.SetBool("isStanding", Mathf.Approximately(horizontalVelocity, 0f));
-        animator.SetBool("isWalking", !Mathf.Approximately(horizontalVelocity, 0f) && Mathf.Abs(horizontalVelocity) <= 1f);
-        animator.SetBool("isRunning", Mathf.Abs(horizontalVelocity) > 1f);
+        animator.SetBool("isWalking", !Mathf.Approximately(horizontalVelocity, 0f) && Mathf.Abs(horizontalVelocity) < runningSpeed);
+        animator.SetBool("isRunning", Mathf.Abs(horizontalVelocity) >= runningSpeed);
 
         tryHitPlayer();
     }
