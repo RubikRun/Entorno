@@ -55,7 +55,19 @@ public class SharkMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        bool wasInWater = isInWater;
         UpdateIsInWater();
+        if (wasInWater != isInWater)
+        {
+            if (isInWater)
+            {
+                rigidBody.gravityScale = 0f;
+            }
+            else
+            {
+                rigidBody.gravityScale = 1f;
+            }
+        }
 
         Vector3 velocity = getVelocity();
 
@@ -65,7 +77,7 @@ public class SharkMovement : MonoBehaviour
         }
         else
         {
-            rigidBody.velocity = new Vector2(velocity.x, rigidBody.velocity.y);
+            rigidBody.velocity = new Vector2(rigidBody.velocity.x, rigidBody.velocity.y);
         }
 
         if (Mathf.Approximately(rigidBody.velocity.y, 0f))
@@ -191,6 +203,15 @@ public class SharkMovement : MonoBehaviour
             wanderTimeToNextState = wanderTimeInterval;
         }
         wanderTimeToNextState--;
+
+        if (wanderState == WanderState.WalkingRight && !IsPositionInWater(transform.position + new Vector3(1f, 0f, 0f)))
+        {
+            wanderState = WanderState.WalkingLeft;
+        }
+        else if (wanderState == WanderState.WalkingLeft && !IsPositionInWater(transform.position + new Vector3(-1f, 0f, 0f)))
+        {
+            wanderState = WanderState.WalkingRight;
+        }
 
         if (wanderState == WanderState.WalkingRight)
         {

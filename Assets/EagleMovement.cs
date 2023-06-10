@@ -32,7 +32,7 @@ public class EagleMovement : MonoBehaviour
 
     float fieldOfView = 7f;
 
-    const float hitDistance = 1.4f;
+    const float hitDistance = 1.6f;
 
     // Start is called before the first frame update
     void Start()
