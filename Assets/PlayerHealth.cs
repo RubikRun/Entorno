@@ -24,6 +24,11 @@ public class PlayerHealth : MonoBehaviour
         healthManager.TakeDamage(0.1f);
     }
 
+    public void HitByEagle()
+    {
+        healthManager.TakeDamage(0.1f);
+    }
+
     public void HealByCat()
     {
         healthManager.Heal(0.02f);

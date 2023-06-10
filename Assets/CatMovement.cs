@@ -64,7 +64,7 @@ public class CatMovement : MonoBehaviour
         float horizontalVelocity = getHorizontalVelocity();
 
         rigidBody.velocity = new Vector2(horizontalVelocity, rigidBody.velocity.y);
-        // Check if bear is walking/running left or right and accordingly flip the bear horizontally
+        // Check if cat is walking/running left or right and accordingly flip the bear horizontally
         if (horizontalVelocity > 0)
         {
             transform.localScale = new Vector3
@@ -83,7 +83,7 @@ public class CatMovement : MonoBehaviour
                 transform.localScale.z
             );
         }
-        // Set animator parameters to indicate if bear is currently standing, walking or running
+        // Set animator parameters to indicate if cat is currently standing, walking or running
         animator.SetBool("isStanding", Mathf.Approximately(horizontalVelocity, 0f));
         animator.SetBool("isWalking", !Mathf.Approximately(horizontalVelocity, 0f) && Mathf.Abs(horizontalVelocity) < runningSpeed);
         animator.SetBool("isRunning", Mathf.Abs(horizontalVelocity) >= runningSpeed);
