@@ -66,7 +66,7 @@ public class CameraMovement : MonoBehaviour
         // Make the camera follow Player
         Vector3 targetPosition = new Vector3(
             target.position.x,
-            Mathf.Lerp(3f, target.position.y, tEnablingVertical),
+            Mathf.Lerp(0f, target.position.y, tEnablingVertical),
             -10f
         );
         transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref velocity, smoothTime);

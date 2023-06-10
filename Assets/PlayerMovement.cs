@@ -26,6 +26,11 @@ public class PlayerMovement : MonoBehaviour
     GameObject water;
     public bool isInWater = false;
 
+    GameObject cats;
+    public float catPetRadius = 1f;
+
+    GameObject myCat = null;
+
     private bool isOnGround = false;
 
     // Start is called before the first frame update
@@ -37,6 +42,7 @@ public class PlayerMovement : MonoBehaviour
         GameObject sun = GameObject.Find("Sun");
 
         water = GameObject.Find("Water");
+        cats = GameObject.Find("Cats");
     }
 
     // Update is called once per frame
@@ -107,6 +113,45 @@ public class PlayerMovement : MonoBehaviour
 
     void UpdateAsHuman()
     {
+        // Handle the petting of cats
+        if (Input.GetKey(KeyCode.P))
+        {
+            if (myCat == null)
+            {
+                GameObject cat = GetClosestCat();
+                Vector3 catPos = cat.transform.position;
+                float catDist = Mathf.Abs(catPos.x - transform.position.x);
+                if (catDist < catPetRadius)
+                {
+                    animator.SetBool("isPetting", true);
+                    animator.SetBool("isRunning", false);
+                    animator.SetBool("isJumping", false);
+                    animator.SetBool("isFalling", false);
+                    animator.SetBool("isJumpFlying", false);
+
+                    CatMovement catMovement = cat.GetComponent<CatMovement>();
+                    catMovement.StartPetting();
+
+                    transform.localScale = new Vector3
+                    (
+                        (catPos.x - transform.position.x > 0 ? 1f : -1f) * Mathf.Abs(transform.localScale.x),
+                        transform.localScale.y,
+                        transform.localScale.z
+                    );
+
+                    myCat = cat;
+                }
+            }
+            return;
+        }
+        else if (myCat != null)
+        {
+            animator.SetBool("isPetting", false);
+
+            CatMovement myCatMovement = myCat.GetComponent<CatMovement>();
+            myCatMovement.StopPetting();
+            myCat = null;
+        }
         // Handle horizontal movement
         float horizontalMove = Input.GetAxis("Horizontal");
         rigidBody.velocity = new Vector2(horizontalMove * speed, rigidBody.velocity.y);
@@ -229,6 +274,27 @@ public class PlayerMovement : MonoBehaviour
         }
 
         animator.SetBool("inWater", isInWater);
+    }
+
+    GameObject GetClosestCat()
+    {
+        Vector3 playerPos = transform.position;
+
+        GameObject closestCat = null;
+        float closestDist = float.PositiveInfinity;
+
+        foreach (Transform catTr in cats.transform)
+        {
+            Vector3 catPos = catTr.position;
+            float catDist = Mathf.Abs(catPos.x - playerPos.x);
+            if (catDist < closestDist)
+            {
+                closestCat = catTr.gameObject;
+                closestDist = catDist;
+            }
+        }
+
+        return closestCat;
     }
 
     void OnCollisionEnter2D(Collision2D collision)

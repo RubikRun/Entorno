@@ -26,6 +26,6 @@ public class PlayerHealth : MonoBehaviour
 
     public void HealByCat()
     {
-        healthManager.Heal(0.1f);
+        healthManager.Heal(0.02f);
     }
 }

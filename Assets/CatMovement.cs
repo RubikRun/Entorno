@@ -48,6 +48,18 @@ public class CatMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (animator.GetBool("isBeingPetted"))
+        {
+            transform.localScale = new Vector3
+            (
+                (player.transform.position.x - transform.position.x > 0 ? 1f : -1f) * Mathf.Abs(transform.localScale.x),
+                transform.localScale.y,
+                transform.localScale.z
+            );
+
+            playerHealth.HealByCat();
+            return;
+        }
         // Handle horizontal movement
         float horizontalVelocity = getHorizontalVelocity();
 
@@ -132,5 +144,18 @@ public class CatMovement : MonoBehaviour
         }
 
         return 0f;
+    }
+
+    public void StartPetting()
+    {
+        animator.SetBool("isBeingPetted", true);
+        animator.SetBool("isStanding", false);
+        animator.SetBool("isWalking", false);
+        animator.SetBool("isRunning", false);
+    }
+
+    public void StopPetting()
+    {
+        animator.SetBool("isBeingPetted", false);
     }
 }
