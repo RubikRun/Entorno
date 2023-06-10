@@ -34,7 +34,7 @@ public class BearMovement : MonoBehaviour
 
     float fieldOfView = 7f;
 
-    const float hitDistance = 1f;
+    const float hitDistance = 1.8f;
 
     // Start is called before the first frame update
     void Start()

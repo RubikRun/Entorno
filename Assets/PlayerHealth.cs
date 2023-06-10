@@ -29,6 +29,11 @@ public class PlayerHealth : MonoBehaviour
         healthManager.TakeDamage(0.1f);
     }
 
+    public void HitByShark()
+    {
+        healthManager.TakeDamage(0.2f);
+    }
+
     public void HealByCat()
     {
         healthManager.Heal(0.02f);
