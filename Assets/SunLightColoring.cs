@@ -16,7 +16,8 @@ public class SunLightColoring : MonoBehaviour
     void Start()
     {
         lightComp = GetComponent<Light2D>();
-        sunOrbiting = GetComponent<SunOrbiting>();
+        GameObject sun = GameObject.Find("Sun");
+        sunOrbiting = sun.GetComponent<SunOrbiting>();
     }
 
     // Update is called once per frame

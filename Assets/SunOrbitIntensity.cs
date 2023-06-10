@@ -13,7 +13,8 @@ public class SunOrbitIntensity : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        sunOrbiting = GetComponent<SunOrbiting>();
+        GameObject sun = GameObject.Find("Sun");
+        sunOrbiting = sun.GetComponent<SunOrbiting>();
         lightComp = GetComponent<Light2D>();
         initialIntensity = lightComp.intensity;
     }
