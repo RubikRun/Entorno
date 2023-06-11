@@ -36,6 +36,7 @@ public class PlayerMovement : MonoBehaviour
     GameObject myCat = null;
 
     private bool isOnGround = false;
+    private bool isOnRock = false;
 
     PlayerBreath playerBreath;
 
@@ -210,7 +211,7 @@ public class PlayerMovement : MonoBehaviour
         // Set animator parameter to indicate if player is currently running
         animator.SetBool("isRunning", !Mathf.Approximately(horizontalMove, 0f));
         // Handle jumping
-        if (Input.GetButtonDown("Jump") && isOnGround)
+        if (Input.GetButtonDown("Jump") && (isOnGround || isOnRock))
         {
             rigidBody.velocity = new Vector2(rigidBody.velocity.x, jumpPower);
             animator.SetBool("isJumping", true);
@@ -388,6 +389,10 @@ public class PlayerMovement : MonoBehaviour
         {
             isOnGround = true;
         }
+        if (collision.gameObject.CompareTag("Rock"))
+        {
+            isOnRock = true;
+        }
     }
 
 
@@ -396,6 +401,10 @@ public class PlayerMovement : MonoBehaviour
         if (collision.gameObject.CompareTag("Ground"))
         {
             isOnGround = false;
+        }
+        if (collision.gameObject.CompareTag("Rock"))
+        {
+            isOnRock = false;
         }
     }
 

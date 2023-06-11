@@ -494,7 +494,7 @@ GameObject:
   - component: {fileID: 161163185}
   m_Layer: 0
   m_Name: Rock01
-  m_TagString: Untagged
+  m_TagString: Rock
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4567,8 +4567,8 @@ GameObject:
   - component: {fileID: 1078000908}
   - component: {fileID: 1078000907}
   m_Layer: 0
-  m_Name: Static Sprite
-  m_TagString: Untagged
+  m_Name: Rock02
+  m_TagString: Rock
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
