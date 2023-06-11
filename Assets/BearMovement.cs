@@ -13,6 +13,7 @@ public class BearMovement : MonoBehaviour
     Animator animator;
 
     GameObject player;
+    PlayerMovement playerMovement;
 
     PlayerHealth playerHealth;
 
@@ -23,6 +24,8 @@ public class BearMovement : MonoBehaviour
 
     [SerializeField]
     Vector2 initialPosition = Vector2.zero;
+
+    bool seesPlayer = false;
 
     enum WanderState
     {
@@ -43,6 +46,7 @@ public class BearMovement : MonoBehaviour
         animator = GetComponent<Animator>();
         player = GameObject.Find("Player");
         playerHealth = player.GetComponent<PlayerHealth>();
+        playerMovement = player.GetComponent<PlayerMovement>();
 
         initialPosition = transform.localPosition;
 
@@ -52,6 +56,21 @@ public class BearMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Check if bear needs to start/stop seeing the player
+        if (seesPlayer)
+        {
+            if (!isPlayerInFieldOfView())
+            {
+                seesPlayer = false;
+            }
+        }
+        else
+        {
+            if (isPlayerInFieldOfView() && !playerMovement.IsSquare())
+            {
+                seesPlayer = true;
+            }
+        }
         // Handle horizontal movement
         float horizontalVelocity = getHorizontalVelocity();
 
@@ -85,7 +104,7 @@ public class BearMovement : MonoBehaviour
 
     bool tryHitPlayer()
     {
-        if (Mathf.Abs(player.transform.position.x - transform.position.x) < hitDistance)
+        if ((player.transform.position - transform.position).magnitude < hitDistance)
         {
             playerHealth.HitByBear();
             animator.SetBool("isAttacking", true);
@@ -107,7 +126,7 @@ public class BearMovement : MonoBehaviour
 
     float getHorizontalMove()
     {
-        if (isPlayerInFieldOfView())
+        if (seesPlayer)
         {
             return runTowardsPlayer();
         }
@@ -116,7 +135,7 @@ public class BearMovement : MonoBehaviour
 
     bool isPlayerInFieldOfView()
     {
-        return Mathf.Abs(player.transform.position.x - transform.position.x) < fieldOfView;
+        return (player.transform.position - transform.position).magnitude < fieldOfView;
     }
 
     float runTowardsPlayer()

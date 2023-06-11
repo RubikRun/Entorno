@@ -11,7 +11,7 @@ public class BearPopulator : MonoBehaviour
     {
         bearOriginal = GameObject.Find("BearOriginal");
 
-        const float distBetweenBears = 24f;
+        const float distBetweenBears = 34f;
 
         for (float x = distBetweenBears; x <= 50f; x += distBetweenBears)
         {

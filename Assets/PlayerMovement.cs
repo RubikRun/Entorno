@@ -40,6 +40,8 @@ public class PlayerMovement : MonoBehaviour
 
     PlayerBreath playerBreath;
 
+    bool isSquare = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -85,6 +87,11 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    public bool IsSquare()
+    {
+        return isSquare;
+    }
+
     void InitHumanForm()
     {
         rigidBody.gravityScale = 1f;
@@ -94,6 +101,13 @@ public class PlayerMovement : MonoBehaviour
         );
 
         playerBreath.HideBreathBar();
+        isSquare = false;
+    }
+
+    void InitHumanSwimming()
+    {
+        playerBreath.ShowBreathBar();
+        isSquare = false;
     }
 
     void InitBirdForm()
@@ -153,7 +167,7 @@ public class PlayerMovement : MonoBehaviour
         animator.SetBool("isRunning", !Mathf.Approximately(rigidBody.velocity.x, 0f));
 
         // Handle the turning to a square
-        bool isSquare = Input.GetKey(KeyCode.Q);
+        isSquare = Input.GetKey(KeyCode.Q);
         animator.SetBool("isSquare", isSquare);
         if (isSquare)
         {
@@ -231,11 +245,6 @@ public class PlayerMovement : MonoBehaviour
         {
             animator.SetBool("isJumping", false);
         }
-    }
-
-    void InitHumanSwimming()
-    {
-        playerBreath.ShowBreathBar();
     }
 
     void UpdateAsHumanSwimming()
@@ -399,7 +408,6 @@ public class PlayerMovement : MonoBehaviour
         }
         if (collision.gameObject.CompareTag("Rock"))
         {
-            bool isSquare = animator.GetBool("isSquare");
             if (isSquare)
             {
                 SpriteRenderer rockSprite = collision.gameObject.GetComponent<SpriteRenderer>();
