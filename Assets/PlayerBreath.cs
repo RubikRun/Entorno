@@ -12,6 +12,7 @@ public class PlayerBreath : MonoBehaviour
     {
         breathBar = GameObject.Find("BreathBar");
         breathManager = breathBar.GetComponent<BreathManager>();
+        breathBar.SetActive(false);
     }
 
     // Update is called once per frame
