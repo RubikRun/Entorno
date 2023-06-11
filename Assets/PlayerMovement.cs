@@ -9,9 +9,9 @@ public class PlayerMovement : MonoBehaviour
     public float speed = 6f;
     public float jumpPower = 6f;
 
-    public float humanSwimHorizontalSpeed = 5f;
-    public float humanSwimVerticalSpeed = 0.16f;
-    public float humanSwimMaxVerticalVelocity = 6f;
+    public float humanSwimHorizontalSpeed = 3f;
+    public float humanSwimVerticalSpeed = 0.1f;
+    public float humanSwimMaxVerticalVelocity = 2f;
 
     public float birdHorizontalSpeed = 8f;
     public float birdVerticalSpeed = 0.2f;

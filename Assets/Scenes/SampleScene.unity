@@ -3281,9 +3281,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 6
   jumpPower: 6
-  humanSwimHorizontalSpeed: 5
-  humanSwimVerticalSpeed: 0.16
-  humanSwimMaxVerticalVelocity: 6
+  humanSwimHorizontalSpeed: 3
+  humanSwimVerticalSpeed: 0.1
+  humanSwimMaxVerticalVelocity: 2
   birdHorizontalSpeed: 7
   birdVerticalSpeed: 0.3
   birdMaxVerticalVelocity: 6
@@ -3406,7 +3406,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 10
+  orthographic size: 5
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
