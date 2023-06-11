@@ -147,6 +147,19 @@ public class PlayerMovement : MonoBehaviour
             return;
         }
 
+        animator.SetBool("isFalling", Mathf.Abs(rigidBody.velocity.y) > 10f);
+        animator.SetBool("isJumpFlying", Mathf.Abs(rigidBody.velocity.y) <= 10f && !Mathf.Approximately(rigidBody.velocity.y, 0f));
+        // Set animator parameter to indicate if player is currently running
+        animator.SetBool("isRunning", !Mathf.Approximately(rigidBody.velocity.x, 0f));
+
+        // Handle the turning to a square
+        bool isSquare = Input.GetKey(KeyCode.Q);
+        animator.SetBool("isSquare", isSquare);
+        if (isSquare)
+        {
+            return;
+        }
+
         // Handle the petting of cats
         if (Input.GetKey(KeyCode.P))
         {
@@ -208,8 +221,6 @@ public class PlayerMovement : MonoBehaviour
                 transform.localScale.z
             );
         }
-        // Set animator parameter to indicate if player is currently running
-        animator.SetBool("isRunning", !Mathf.Approximately(horizontalMove, 0f));
         // Handle jumping
         if (Input.GetButtonDown("Jump") && (isOnGround || isOnRock))
         {
@@ -220,9 +231,6 @@ public class PlayerMovement : MonoBehaviour
         {
             animator.SetBool("isJumping", false);
         }
-
-        animator.SetBool("isFalling", Mathf.Abs(rigidBody.velocity.y) > 10f);
-        animator.SetBool("isJumpFlying", Mathf.Abs(rigidBody.velocity.y) <= 10f && !Mathf.Approximately(rigidBody.velocity.y, 0f));
     }
 
     void InitHumanSwimming()
@@ -391,6 +399,15 @@ public class PlayerMovement : MonoBehaviour
         }
         if (collision.gameObject.CompareTag("Rock"))
         {
+            bool isSquare = animator.GetBool("isSquare");
+            if (isSquare)
+            {
+                SpriteRenderer rockSprite = collision.gameObject.GetComponent<SpriteRenderer>();
+                if (rockSprite.bounds.size.y < 1.6f)
+                {
+                    collision.gameObject.SetActive(false);
+                }
+            }
             isOnRock = true;
         }
     }
