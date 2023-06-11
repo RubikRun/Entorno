@@ -37,6 +37,8 @@ public class PlayerMovement : MonoBehaviour
 
     private bool isOnGround = false;
 
+    PlayerBreath playerBreath;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -47,6 +49,8 @@ public class PlayerMovement : MonoBehaviour
 
         water = GameObject.Find("Water");
         cats = GameObject.Find("Cats");
+
+        playerBreath = GetComponent<PlayerBreath>();
     }
 
     // Update is called once per frame
@@ -129,6 +133,7 @@ public class PlayerMovement : MonoBehaviour
             if (!isInWater)
             {
                 transform.SetLocalPositionAndRotation(transform.localPosition, Quaternion.identity);
+                playerBreath.RegainBreathOutOfWater();
             }
         }
 
@@ -212,6 +217,8 @@ public class PlayerMovement : MonoBehaviour
 
     void UpdateAsHumanSwimming()
     {
+        playerBreath.LooseBreathInWater();
+
         // Handle horizontal movement
         float horizontalMove = Input.GetAxis("Horizontal");
         rigidBody.velocity = new Vector2(horizontalMove * humanSwimHorizontalSpeed, rigidBody.velocity.y);

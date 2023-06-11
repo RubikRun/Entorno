@@ -3145,6 +3145,7 @@ GameObject:
   - component: {fileID: 457677010}
   - component: {fileID: 457677011}
   - component: {fileID: 457677012}
+  - component: {fileID: 457677013}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -3338,6 +3339,18 @@ MonoBehaviour:
   isHuman: 1
   isBird: 0
   isFish: 0
+--- !u!114 &457677013
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 457677003}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b55d0dc3a563c3f4084734647ce5a73b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -4036,10 +4049,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 822981833}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ccd5a4bc372487d4eac93c4585e393b9, type: 3}
+  m_Script: {fileID: 11500000, guid: 592f46a8a10a4db4aae99c3df52fb4d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthBar: {fileID: 712731781}
+  breathBar: {fileID: 712731781}
 --- !u!1 &848631423
 GameObject:
   m_ObjectHideFlags: 0
