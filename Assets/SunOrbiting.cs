@@ -72,7 +72,7 @@ public class SunOrbiting : MonoBehaviour
 
         Vector3 sunPosition = new Vector3(
             playerPos.x + Mathf.Cos(sunAngle) * orbitRadius,
-            (groundLevel + Mathf.Sin(sunAngle) * orbitRadius) * elipseFactor,
+            (playerPos.y + Mathf.Sin(sunAngle) * orbitRadius) * elipseFactor,
             0f
         );
 
