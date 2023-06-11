@@ -91,6 +91,8 @@ public class PlayerMovement : MonoBehaviour
             transform.localPosition,
             Quaternion.identity
         );
+
+        playerBreath.HideBreathBar();
     }
 
     void InitBirdForm()
@@ -123,18 +125,23 @@ public class PlayerMovement : MonoBehaviour
     {
         bool wasInWater = isInWater;
         UpdateIsInWater();
+        if (wasInWater != isInWater)
+        {
+            if (isInWater)
+            {
+                InitHumanSwimming();
+            }
+            else
+            {
+                transform.SetLocalPositionAndRotation(transform.localPosition, Quaternion.identity);
+                playerBreath.RegainBreathOutOfWater();
+                InitHumanForm();
+            }
+        }
         if (isInWater)
         {
             UpdateAsHumanSwimming();
             return;
-        }
-        if (wasInWater != isInWater)
-        {
-            if (!isInWater)
-            {
-                transform.SetLocalPositionAndRotation(transform.localPosition, Quaternion.identity);
-                playerBreath.RegainBreathOutOfWater();
-            }
         }
 
         // Handle the petting of cats
@@ -213,6 +220,11 @@ public class PlayerMovement : MonoBehaviour
 
         animator.SetBool("isFalling", Mathf.Abs(rigidBody.velocity.y) > 10f);
         animator.SetBool("isJumpFlying", Mathf.Abs(rigidBody.velocity.y) <= 10f && !Mathf.Approximately(rigidBody.velocity.y, 0f));
+    }
+
+    void InitHumanSwimming()
+    {
+        playerBreath.ShowBreathBar();
     }
 
     void UpdateAsHumanSwimming()

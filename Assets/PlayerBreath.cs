@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class PlayerBreath : MonoBehaviour
 {
+    GameObject breathBar;
     BreathManager breathManager;
 
     // Start is called before the first frame update
     void Start()
     {
-        GameObject breathBar = GameObject.Find("BreathBar");
+        breathBar = GameObject.Find("BreathBar");
         breathManager = breathBar.GetComponent<BreathManager>();
     }
 
@@ -27,5 +28,15 @@ public class PlayerBreath : MonoBehaviour
     public void RegainBreathOutOfWater()
     {
         breathManager.RegainBreath();
+    }
+
+    public void ShowBreathBar()
+    {
+        breathBar.SetActive(true);
+    }
+
+    public void HideBreathBar()
+    {
+        breathBar.SetActive(false);
     }
 }
