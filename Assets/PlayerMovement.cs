@@ -98,6 +98,7 @@ public class PlayerMovement : MonoBehaviour
     void InitBirdForm()
     {
         rigidBody.gravityScale = birdGravityScale;
+        playerBreath.HideBreathBar();
     }
 
     void InitFishForm()
@@ -119,6 +120,7 @@ public class PlayerMovement : MonoBehaviour
                 )
             );
         }
+        playerBreath.HideBreathBar();
     }
 
     void UpdateAsHuman()
