@@ -19,10 +19,12 @@ public class CameraMovement : MonoBehaviour
     private int enablingVertical = 0;
     private bool doVertical = false;
 
+    GameObject player;
+
     // Start is called before the first frame update
     void Start()
     {
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        player = GameObject.FindGameObjectWithTag("Player");
         target = player.transform;
         playerAnimalForms = player.GetComponent<PlayerAnimalForms>();
         playerMovement = player.GetComponent<PlayerMovement>();
@@ -37,7 +39,8 @@ public class CameraMovement : MonoBehaviour
         // Because in when vertical is disabled Player is not in the center of the screen, and when enabled he is.
         // So just LERP-ing between vertical and non-vertical when changed.
         bool didVertical = doVertical;
-        doVertical = playerAnimalForms.isBird || (playerAnimalForms.isFish && playerMovement.isInWater) || (playerAnimalForms.isHuman && playerMovement.isInWater);
+        doVertical = playerAnimalForms.isBird || (playerAnimalForms.isFish && playerMovement.isInWater) || (playerAnimalForms.isHuman && playerMovement.isInWater)
+            || (player.transform.position.x > 50f && player.transform.position.x < 100f);
         if (doVertical != didVertical)
         {
             if (doVertical)
