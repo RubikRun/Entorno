@@ -40,7 +40,7 @@ public class CameraMovement : MonoBehaviour
         // So just LERP-ing between vertical and non-vertical when changed.
         bool didVertical = doVertical;
         doVertical = playerAnimalForms.isBird || (playerAnimalForms.isFish && playerMovement.isInWater) || (playerAnimalForms.isHuman && playerMovement.isInWater)
-            || (player.transform.position.x > 50f && player.transform.position.x < 100f);
+            || (player.transform.position.y > 6f);
         if (doVertical != didVertical)
         {
             if (doVertical)
