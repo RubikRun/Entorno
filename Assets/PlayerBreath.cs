@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerBreath : MonoBehaviour
 {
@@ -24,6 +25,7 @@ public class PlayerBreath : MonoBehaviour
     public void LooseBreathInWater()
     {
         breathManager.LooseBreath(0.02f);
+        HandleDeath();
     }
 
     public void RegainBreathOutOfWater()
@@ -39,5 +41,13 @@ public class PlayerBreath : MonoBehaviour
     public void HideBreathBar()
     {
         breathBar.SetActive(false);
+    }
+
+    private void HandleDeath()
+    {
+        if (breathManager.IsOutOfBreath())
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
     }
 }
