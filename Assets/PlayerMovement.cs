@@ -256,13 +256,10 @@ public class PlayerMovement : MonoBehaviour
 
     void UpdateAsBird()
     {
-        // Handle horizontal movement
         float horizontalMove = Input.GetAxis("Horizontal");
-        rigidBody.velocity = new Vector2(horizontalMove * birdHorizontalSpeed, rigidBody.velocity.y);
-        // Handle vertical movement
         float verticalMove = Input.GetAxis("Vertical");
         rigidBody.velocity = new Vector2(
-            rigidBody.velocity.x,
+            horizontalMove * birdHorizontalSpeed,
             Mathf.Clamp(
                 rigidBody.velocity.y + verticalMove * birdVerticalSpeed
                     * fLimitFlying(rigidBody.velocity.y / birdMaxVerticalVelocity),
@@ -270,6 +267,13 @@ public class PlayerMovement : MonoBehaviour
                 birdMaxVerticalVelocity
             )
         );
+
+        bool wasInWater = isInWater;
+        UpdateIsInWater();
+        if (wasInWater != isInWater && isInWater)
+        {
+            rigidBody.velocity = -2f * rigidBody.velocity;
+        }
 
         if (Mathf.Approximately(rigidBody.velocity.x, 0f) && Mathf.Approximately(rigidBody.velocity.y, 0f))
         {
@@ -324,19 +328,23 @@ public class PlayerMovement : MonoBehaviour
 
     void UpdateIsInWater()
     {
-        isInWater = false;
+        isInWater = IsPositionInWater(transform.position);
+        animator.SetBool("inWater", isInWater);
+    }
+
+    bool IsPositionInWater(Vector3 position)
+    {
         foreach (Transform waterChildTr in water.transform)
         {
             GameObject waterChild = waterChildTr.gameObject;
             SpriteRenderer waterChildSR = waterChild.GetComponent<SpriteRenderer>();
-            if (waterChildSR.bounds.Contains(transform.position))
+            if (waterChildSR.bounds.Contains(position))
             {
-                isInWater = true;
-                break;
+                return true;
             }
         }
 
-        animator.SetBool("inWater", isInWater);
+        return false;
     }
 
     GameObject GetClosestCat()

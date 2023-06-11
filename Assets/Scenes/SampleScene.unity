@@ -326,7 +326,7 @@ MonoBehaviour:
   tick: 1
   mins: 0
   hours: 11
-  days: 1
+  days: 2
   nightFasterFactor: 6
   groundLevel: -3
   orbitRadius: 15
