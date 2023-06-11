@@ -113,6 +113,7 @@ public class PlayerMovement : MonoBehaviour
 
     void UpdateAsHuman()
     {
+        UpdateIsInWater();
         // Handle the petting of cats
         if (Input.GetKey(KeyCode.P))
         {

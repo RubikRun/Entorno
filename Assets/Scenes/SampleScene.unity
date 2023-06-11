@@ -326,7 +326,7 @@ MonoBehaviour:
   tick: 1
   mins: 0
   hours: 11
-  days: 3
+  days: 1
   nightFasterFactor: 6
   groundLevel: -3
   orbitRadius: 15
@@ -3157,7 +3157,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 457677003}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 51.33, y: -2.324, z: 0}
+  m_LocalPosition: {x: 48.25, y: -2.324, z: 0}
   m_LocalScale: {x: 1.7963, y: 1.7963, z: 1.7963}
   m_ConstrainProportionsScale: 0
   m_Children: []
