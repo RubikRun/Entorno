@@ -9,6 +9,10 @@ public class PlayerMovement : MonoBehaviour
     public float speed = 6f;
     public float jumpPower = 6f;
 
+    public float humanSwimHorizontalSpeed = 5f;
+    public float humanSwimVerticalSpeed = 0.16f;
+    public float humanSwimMaxVerticalVelocity = 6f;
+
     public float birdHorizontalSpeed = 8f;
     public float birdVerticalSpeed = 0.2f;
     public float birdMaxVerticalVelocity = 8f;
@@ -113,7 +117,21 @@ public class PlayerMovement : MonoBehaviour
 
     void UpdateAsHuman()
     {
+        bool wasInWater = isInWater;
         UpdateIsInWater();
+        if (isInWater)
+        {
+            UpdateAsHumanSwimming();
+            return;
+        }
+        if (wasInWater != isInWater)
+        {
+            if (!isInWater)
+            {
+                transform.SetLocalPositionAndRotation(transform.localPosition, Quaternion.identity);
+            }
+        }
+
         // Handle the petting of cats
         if (Input.GetKey(KeyCode.P))
         {
@@ -190,6 +208,43 @@ public class PlayerMovement : MonoBehaviour
 
         animator.SetBool("isFalling", Mathf.Abs(rigidBody.velocity.y) > 10f);
         animator.SetBool("isJumpFlying", Mathf.Abs(rigidBody.velocity.y) <= 10f && !Mathf.Approximately(rigidBody.velocity.y, 0f));
+    }
+
+    void UpdateAsHumanSwimming()
+    {
+        // Handle horizontal movement
+        float horizontalMove = Input.GetAxis("Horizontal");
+        rigidBody.velocity = new Vector2(horizontalMove * humanSwimHorizontalSpeed, rigidBody.velocity.y);
+        // Handle vertical movement
+        float verticalMove = Input.GetAxis("Vertical");
+        rigidBody.velocity = new Vector2(
+            rigidBody.velocity.x,
+            Mathf.Clamp(
+                rigidBody.velocity.y + verticalMove * humanSwimVerticalSpeed
+                    * fLimitFlying(rigidBody.velocity.y / humanSwimMaxVerticalVelocity),
+                -humanSwimMaxVerticalVelocity,
+                humanSwimMaxVerticalVelocity
+            )
+        );
+
+        if (Mathf.Approximately(rigidBody.velocity.x, 0f) && Mathf.Approximately(rigidBody.velocity.y, 0f))
+        {
+            transform.SetLocalPositionAndRotation(
+                transform.localPosition,
+                Quaternion.identity
+            );
+        }
+        else
+        {
+            transform.SetLocalPositionAndRotation(
+                transform.localPosition,
+                Quaternion.Euler(
+                    0f,
+                    0f,
+                    Mathf.Rad2Deg * (Mathf.Atan2(rigidBody.velocity.y, rigidBody.velocity.x) - Mathf.PI / 2f)
+                )
+            );
+        }
     }
 
     void UpdateAsBird()
