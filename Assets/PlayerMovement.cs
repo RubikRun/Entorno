@@ -100,7 +100,15 @@ public class PlayerMovement : MonoBehaviour
             Quaternion.identity
         );
 
-        playerBreath.HideBreathBar();
+        UpdateIsInWater();
+        if (isInWater)
+        {
+            InitHumanSwimming();
+        }
+        else
+        {
+            playerBreath.HideBreathBar();
+        }
         isSquare = false;
     }
 
