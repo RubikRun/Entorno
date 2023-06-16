@@ -115,7 +115,6 @@ public class PlayerMovement : MonoBehaviour
     void InitHumanSwimming()
     {
         playerBreath.ShowBreathBar();
-        isSquare = false;
     }
 
     void InitBirdForm()
@@ -130,20 +129,27 @@ public class PlayerMovement : MonoBehaviour
         if (isInWater)
         {
             InitBirdForm();
+            playerBreath.HideBreathBar();
+            playerBreath.RegainBreathOutOfWater();
         }
         else
         {
-            rigidBody.gravityScale = 1f;
-            transform.SetLocalPositionAndRotation(
-                transform.localPosition,
-                Quaternion.Euler(
-                    0f,
-                    0f,
-                    90f
-                )
-            );
+            InitFishOutOfWater();
         }
-        playerBreath.HideBreathBar();
+    }
+
+    void InitFishOutOfWater()
+    {
+        rigidBody.gravityScale = 1f;
+        transform.SetLocalPositionAndRotation(
+            transform.localPosition,
+            Quaternion.Euler(
+                0f,
+                0f,
+                90f
+            )
+        );
+        playerBreath.ShowBreathBar();
     }
 
     void UpdateAsHuman()
@@ -158,7 +164,6 @@ public class PlayerMovement : MonoBehaviour
             }
             else
             {
-                transform.SetLocalPositionAndRotation(transform.localPosition, Quaternion.identity);
                 playerBreath.RegainBreathOutOfWater();
                 InitHumanForm();
             }
@@ -364,6 +369,8 @@ public class PlayerMovement : MonoBehaviour
             fishTimeSinceLastJump = 0;
         }
         fishTimeSinceLastJump++;
+
+        playerBreath.LooseBreathInWater();
     }
 
     void UpdateIsInWater()
