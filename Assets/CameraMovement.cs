@@ -39,8 +39,9 @@ public class CameraMovement : MonoBehaviour
         // Because in when vertical is disabled Player is not in the center of the screen, and when enabled he is.
         // So just LERP-ing between vertical and non-vertical when changed.
         bool didVertical = doVertical;
-        doVertical = playerAnimalForms.isBird || (playerAnimalForms.isFish && playerMovement.isInWater) || (playerAnimalForms.isHuman && playerMovement.isInWater)
-            || (player.transform.position.y > 6f);
+        //doVertical = playerAnimalForms.isBird || (playerAnimalForms.isFish && playerMovement.isInWater) || (playerAnimalForms.isHuman && playerMovement.isInWater)
+        //|| (player.transform.position.y > 6f);
+        doVertical = true;
         if (doVertical != didVertical)
         {
             if (doVertical)
