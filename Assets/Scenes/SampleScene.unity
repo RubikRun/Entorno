@@ -4891,15 +4891,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 6
   jumpPower: 6
-  humanSwimHorizontalSpeed: 10
-  humanSwimVerticalSpeed: 2
-  humanSwimMaxVerticalVelocity: 8
+  humanSwimHorizontalSpeed: 3
+  humanSwimVerticalSpeed: 0.1
+  humanSwimMaxVerticalVelocity: 2
   birdHorizontalSpeed: 8
   birdVerticalSpeed: 0.2
   birdMaxVerticalVelocity: 8
+  birdInWaterHorizontalSpeed: 3
+  birdInWaterVerticalSpeed: 0.05
+  birdInWaterMaxVerticalVelocity: 3
   birdGravityScale: 0.3
+  fishGravityScale: 0.3
   fishJumpPower: 2
   fishTimeBetweenJumps: 200
+  fishHorizontalSpeed: 8
+  fishVerticalSpeed: 0.2
+  fishMaxVerticalVelocity: 8
   isInWater: 0
   catPetRadius: 1
 --- !u!95 &457677010

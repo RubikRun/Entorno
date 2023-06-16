@@ -16,12 +16,19 @@ public class PlayerMovement : MonoBehaviour
     public float birdHorizontalSpeed = 8f;
     public float birdVerticalSpeed = 0.2f;
     public float birdMaxVerticalVelocity = 8f;
+    public float birdInWaterHorizontalSpeed = 3f;
+    public float birdInWaterVerticalSpeed = 0.05f;
+    public float birdInWaterMaxVerticalVelocity = 3f;
 
     public float birdGravityScale = 0.3f;
+    public float fishGravityScale = 0.3f;
 
     public float fishJumpPower = 2f;
     public int fishTimeBetweenJumps = 200;
     private int fishTimeSinceLastJump = 9999999;
+    public float fishHorizontalSpeed = 8f;
+    public float fishVerticalSpeed = 0.2f;
+    public float fishMaxVerticalVelocity = 8f;
 
     private Rigidbody2D rigidBody;
 
@@ -119,8 +126,23 @@ public class PlayerMovement : MonoBehaviour
 
     void InitBirdForm()
     {
-        rigidBody.gravityScale = birdGravityScale;
-        playerBreath.HideBreathBar();
+        UpdateIsInWater();
+        if (isInWater)
+        {
+            InitBirdInWater();
+        }
+        else
+        {
+            rigidBody.gravityScale = birdGravityScale;
+            playerBreath.HideBreathBar();
+            playerBreath.RegainBreathOutOfWater();
+        }
+    }
+
+    void InitBirdInWater()
+    {
+        rigidBody.gravityScale = 1f;
+        playerBreath.ShowBreathBar();
     }
 
     void InitFishForm()
@@ -128,7 +150,7 @@ public class PlayerMovement : MonoBehaviour
         UpdateIsInWater();
         if (isInWater)
         {
-            InitBirdForm();
+            rigidBody.gravityScale = fishGravityScale;
             playerBreath.HideBreathBar();
             playerBreath.RegainBreathOutOfWater();
         }
@@ -301,6 +323,25 @@ public class PlayerMovement : MonoBehaviour
 
     void UpdateAsBird()
     {
+        bool wasInWater = isInWater;
+        UpdateIsInWater();
+        if (wasInWater != isInWater)
+        {
+            InitBirdForm();
+        }
+
+        if (isInWater)
+        {
+            UpdateAsBirdInWater();
+        }
+        else
+        {
+            UpdateAsBirdOutOfWater();
+        }
+    }
+
+    void UpdateAsBirdOutOfWater()
+    {
         float horizontalMove = Input.GetAxis("Horizontal");
         float verticalMove = Input.GetAxis("Vertical");
         rigidBody.velocity = new Vector2(
@@ -312,13 +353,6 @@ public class PlayerMovement : MonoBehaviour
                 birdMaxVerticalVelocity
             )
         );
-
-        bool wasInWater = isInWater;
-        UpdateIsInWater();
-        if (wasInWater != isInWater && isInWater)
-        {
-            rigidBody.velocity = -2f * rigidBody.velocity;
-        }
 
         if (Mathf.Approximately(rigidBody.velocity.x, 0f) && Mathf.Approximately(rigidBody.velocity.y, 0f))
         {
@@ -340,6 +374,42 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    void UpdateAsBirdInWater()
+    {
+        float horizontalMove = Input.GetAxis("Horizontal");
+        float verticalMove = Input.GetAxis("Vertical");
+        rigidBody.velocity = new Vector2(
+            horizontalMove * birdInWaterHorizontalSpeed,
+            Mathf.Clamp(
+                rigidBody.velocity.y + verticalMove * birdInWaterVerticalSpeed
+                    * fLimitFlying(rigidBody.velocity.y / birdInWaterMaxVerticalVelocity),
+                -birdInWaterMaxVerticalVelocity,
+                birdInWaterMaxVerticalVelocity
+            )
+        );
+
+        if (Mathf.Approximately(rigidBody.velocity.x, 0f) && Mathf.Approximately(rigidBody.velocity.y, 0f))
+        {
+            transform.SetLocalPositionAndRotation(
+                transform.localPosition,
+                Quaternion.identity
+            );
+        }
+        else
+        {
+            transform.SetLocalPositionAndRotation(
+                transform.localPosition,
+                Quaternion.Euler(
+                    0f,
+                    0f,
+                    Mathf.Rad2Deg * (Mathf.Atan2(rigidBody.velocity.y, rigidBody.velocity.x) - Mathf.PI / 2f)
+                )
+            );
+        }
+
+        playerBreath.LooseBreathInWater();
+    }
+
     void UpdateAsFish()
     {
         bool wasInWater = isInWater;
@@ -351,11 +421,45 @@ public class PlayerMovement : MonoBehaviour
 
         if (isInWater)
         {
-            UpdateAsBird();
+            UpdateAsFishInWater();
         }
         else
         {
             UpdateAsFishOutOfWater();
+        }
+    }
+
+    void UpdateAsFishInWater()
+    {
+        float horizontalMove = Input.GetAxis("Horizontal");
+        float verticalMove = Input.GetAxis("Vertical");
+        rigidBody.velocity = new Vector2(
+            horizontalMove * fishHorizontalSpeed,
+            Mathf.Clamp(
+                rigidBody.velocity.y + verticalMove * fishVerticalSpeed
+                    * fLimitFlying(rigidBody.velocity.y / fishMaxVerticalVelocity),
+                -fishMaxVerticalVelocity,
+                fishMaxVerticalVelocity
+            )
+        );
+
+        if (Mathf.Approximately(rigidBody.velocity.x, 0f) && Mathf.Approximately(rigidBody.velocity.y, 0f))
+        {
+            transform.SetLocalPositionAndRotation(
+                transform.localPosition,
+                Quaternion.identity
+            );
+        }
+        else
+        {
+            transform.SetLocalPositionAndRotation(
+                transform.localPosition,
+                Quaternion.Euler(
+                    0f,
+                    0f,
+                    Mathf.Rad2Deg * (Mathf.Atan2(rigidBody.velocity.y, rigidBody.velocity.x) - Mathf.PI / 2f)
+                )
+            );
         }
     }
 
