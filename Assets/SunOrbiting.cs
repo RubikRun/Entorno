@@ -22,15 +22,31 @@ public class SunOrbiting : MonoBehaviour
 
     GameObject player;
 
+    EyelidSleepEffect eyelidSleepEffect;
+
+    bool shouldFastForward = false;
+
     // Start is called before the first frame update
     void Start()
     {
         player = GameObject.Find("Player");
+        GameObject camera = GameObject.Find("Main Camera");
+        eyelidSleepEffect = camera.GetComponent<EyelidSleepEffect>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.N))
+        {
+            shouldFastForward = true;
+            eyelidSleepEffect.StartSleep();
+        }
+        if (shouldFastForward && eyelidSleepEffect.IsTimeForSunrise())
+        {
+            FastForwardToNextSunrise();
+            shouldFastForward = false;
+        }
         CalcTime();
         PlaceSun();
     }
@@ -72,7 +88,7 @@ public class SunOrbiting : MonoBehaviour
 
         Vector3 sunPosition = new Vector3(
             playerPos.x + Mathf.Cos(sunAngle) * orbitRadius,
-            (playerPos.y + Mathf.Sin(sunAngle) * orbitRadius) * elipseFactor,
+            (playerPos.y + Mathf.Sin(sunAngle) * orbitRadius * elipseFactor),
             0f
         );
 
@@ -82,5 +98,15 @@ public class SunOrbiting : MonoBehaviour
     public void CalcSunAngle()
     {
         sunAngle = 2f * Mathf.PI * (hours * 60f + mins) / (60f * 24f) - Mathf.PI / 2f;
+    }
+
+    public void FastForwardToNextSunrise()
+    {
+        if (hours >= 6)
+        {
+            days++;
+        }
+        hours = 6;
+        mins = 0f;
     }
 }
