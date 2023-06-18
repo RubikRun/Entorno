@@ -15,7 +15,7 @@ public class SharkPopulator : MonoBehaviour
         sharkOriginal = GameObject.Find("SharkOriginal");
         water = GameObject.Find("Water");
 
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < 20; i++)
         {
             createShark();
         }

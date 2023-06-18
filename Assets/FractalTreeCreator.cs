@@ -10,9 +10,10 @@ public class FractalTreeCreator : MonoBehaviour
     Bounds branchBounds;
 
     public int depthMax = 10;
-    public float angle = 1f;
-    public float ratio = 0.5f;
+    public float angle = 0.7f;
+    public float ratio = 0.8f;
     public float height = 3f;
+    public float thickness = 1f;
 
     private class Tree
     {
@@ -102,7 +103,7 @@ public class FractalTreeCreator : MonoBehaviour
         branch.transform.SetLocalPositionAndRotation(midPoint, Quaternion.Euler(0f, 0f, angle));
         float abDist = (A - B).magnitude;
         float branchScale = abDist / branchBounds.size.x;
-        branch.transform.localScale = new Vector3(branchScale, branchScale * 1.4f, branchScale);
+        branch.transform.localScale = new Vector3(branchScale, branchScale * thickness, branchScale);
 
         SpriteRenderer spriteRenderer = branch.AddComponent<SpriteRenderer>();
         spriteRenderer.sprite = branchSprite;

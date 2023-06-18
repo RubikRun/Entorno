@@ -7,7 +7,7 @@ public class PlayerMovement : MonoBehaviour
 {
     // Speed of horizontal movement
     public float speed = 6f;
-    public float jumpPower = 8f;
+    public float jumpPower = 6f;
 
     public float humanSwimHorizontalSpeed = 3f;
     public float humanSwimVerticalSpeed = 0.1f;
@@ -42,8 +42,8 @@ public class PlayerMovement : MonoBehaviour
 
     GameObject myCat = null;
 
-    private bool isOnGround = false;
-    private bool isOnRock = false;
+    private int isOnGround = 0;
+    private int isOnRock = 0;
 
     PlayerBreath playerBreath;
 
@@ -271,7 +271,7 @@ public class PlayerMovement : MonoBehaviour
             );
         }
         // Handle jumping
-        if (Input.GetButtonDown("Jump") && (isOnGround || isOnRock))
+        if (Input.GetButtonDown("Jump") && (isOnGround != 0 || isOnRock != 0))
         {
             rigidBody.velocity = new Vector2(rigidBody.velocity.x, jumpPower);
             animator.SetBool("isJumping", true);
@@ -523,7 +523,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Ground"))
         {
-            isOnGround = true;
+            isOnGround++;
         }
         if (collision.gameObject.CompareTag("Rock"))
         {
@@ -535,7 +535,7 @@ public class PlayerMovement : MonoBehaviour
                     collision.gameObject.SetActive(false);
                 }
             }
-            isOnRock = true;
+            isOnRock++;
         }
     }
 
@@ -544,11 +544,11 @@ public class PlayerMovement : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Ground"))
         {
-            isOnGround = false;
+            isOnGround--;
         }
         if (collision.gameObject.CompareTag("Rock"))
         {
-            isOnRock = false;
+            isOnRock--;
         }
     }
 

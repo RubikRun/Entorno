@@ -11,16 +11,15 @@ public class BearPopulator : MonoBehaviour
     {
         bearOriginal = GameObject.Find("BearOriginal");
 
-        const float distBetweenBears = 34f;
-
-        for (float x = distBetweenBears; x <= 50f; x += distBetweenBears)
-        {
-            createBear(x);
-        }
-        for (float x = -50f; x <= -distBetweenBears; x += distBetweenBears)
-        {
-            createBear(x);
-        }
+        fillHorizontalRange(0f, -50f + 8f, 50f - 8f, 32f, 8f);
+        createBear(79.6f, 4.5f);
+        createBear(126f, 17f);
+        fillHorizontalRange(34f, 161f, 231f, 40f, 8f);
+        fillHorizontalRange(24f, 208f, 231f, 32, 8f);
+        fillHorizontalRange(1f, 110f, 195f, 45f, 16f);
+        createBear(224f, -21f);
+        createBear(82f, -38f);
+        createBear(48f, -37f);
 
         GameObject.Destroy(bearOriginal);
     }
@@ -30,10 +29,21 @@ public class BearPopulator : MonoBehaviour
     {
     }
 
-    void createBear(float xPosition)
+    void createBear(float x, float y)
     {
         GameObject bearClone = Instantiate(bearOriginal, transform);
-        bearClone.name = "Bear" + xPosition.ToString();
-        bearClone.transform.localPosition = new Vector3(xPosition, bearOriginal.transform.localPosition.y, 0);
+        bearClone.name = "Bear" + x.ToString() + y.ToString();
+        bearClone.transform.localPosition = new Vector3(x, y, 0);
+    }
+
+    private void fillHorizontalRange(float y, float xLeft, float xRight, float distCenter, float distAmp)
+    {
+        float x = xLeft;
+        while (x < xRight)
+        {
+            createBear(x, y);
+            float distDelta = Random.Range(-distAmp, +distAmp);
+            x += distCenter + distDelta;
+        }
     }
 }

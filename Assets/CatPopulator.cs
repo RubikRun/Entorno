@@ -11,16 +11,10 @@ public class CatPopulator : MonoBehaviour
     {
         catOriginal = GameObject.Find("CatOriginal");
 
-        const float distBetweenCats = 24f;
-
-        for (float x = distBetweenCats; x <= 50f; x += distBetweenCats)
-        {
-            createCat(x);
-        }
-        for (float x = -50f; x <= -distBetweenCats; x += distBetweenCats)
-        {
-            createCat(x);
-        }
+        createCat(0f, 0f);
+        createCat(172f, 0f);
+        createCat(230f, 31f);
+        createCat(52f, -40f);
 
         GameObject.Destroy(catOriginal);
     }
@@ -31,10 +25,10 @@ public class CatPopulator : MonoBehaviour
         
     }
 
-    void createCat(float xPosition)
+    void createCat(float x, float y)
     {
         GameObject catClone = Instantiate(catOriginal, transform);
-        catClone.name = "Cat" + xPosition.ToString();
-        catClone.transform.localPosition = new Vector3(xPosition, catOriginal.transform.localPosition.y, 0);
+        catClone.name = "Cat" + x.ToString() + y.ToString();
+        catClone.transform.localPosition = new Vector3(x, y, 0);
     }
 }
