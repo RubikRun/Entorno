@@ -7,7 +7,7 @@ public class PlayerMovement : MonoBehaviour
 {
     // Speed of horizontal movement
     public float speed = 6f;
-    public float jumpPower = 6f;
+    public float jumpPower = 8f;
 
     public float humanSwimHorizontalSpeed = 3f;
     public float humanSwimVerticalSpeed = 0.1f;
