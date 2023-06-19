@@ -24,7 +24,7 @@ public class PlayerMovement : MonoBehaviour
     public float fishGravityScale = 0.3f;
 
     public float fishJumpPower = 2f;
-    public int fishTimeBetweenJumps = 200;
+    public int fishTimeBetweenJumps = 100;
     private int fishTimeSinceLastJump = 9999999;
     public float fishHorizontalSpeed = 8f;
     public float fishVerticalSpeed = 0.2f;

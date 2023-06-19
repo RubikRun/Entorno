@@ -24,7 +24,7 @@ public class PlayerBreath : MonoBehaviour
 
     public void LooseBreathInWater()
     {
-        breathManager.LooseBreath(0.033f);
+        breathManager.LooseBreath(0.044f);
         HandleDeath();
     }
 

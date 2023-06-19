@@ -12,10 +12,10 @@ public class EaglePopulator : MonoBehaviour
         eagleOriginal = GameObject.Find("EagleOriginal");
 
         fillRectWithEagles(-44f, 13f, 69f, 61f, 18);
-        fillRectWithEagles(90f, 29f, 143f, 61f, 6);
+        fillRectWithEagles(90f, 34f, 143f, 61f, 6);
         fillRectWithEagles(148f, 40f, 229f, 61f, 8);
         fillRectWithEagles(153f, 6f, 195f, 24f, 6);
-        fillRectWithEagles(-46f, -49f, 28f, -7f, 10);
+        fillRectWithEagles(-46f, -49f, 28f, -12f, 10);
 
         GameObject.Destroy(eagleOriginal);
     }

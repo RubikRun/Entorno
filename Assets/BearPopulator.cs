@@ -11,7 +11,7 @@ public class BearPopulator : MonoBehaviour
     {
         bearOriginal = GameObject.Find("BearOriginal");
 
-        fillHorizontalRange(0f, -50f + 8f, 50f - 8f, 32f, 8f);
+        fillHorizontalRange(0f, -50f + 30f, 50f - 8f, 32f, 8f);
         createBear(79.6f, 4.5f);
         createBear(126f, 17f);
         fillHorizontalRange(34f, 161f, 231f, 40f, 8f);

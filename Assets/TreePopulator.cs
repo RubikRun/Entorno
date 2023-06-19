@@ -15,7 +15,7 @@ public class TreePopulator : MonoBehaviour
         treeSprite = treeOriginal.GetComponent<SpriteRenderer>().sprite;
 
         createTree(60f, 2.75f);
-        createTree(130f, 19.73f);
+        createTree(130f, 18.7f);
 
         fillHorizontalRange(34.26f, 165f, 189f, 24f, 10f);
         fillHorizontalRange(34.26f, 208f, 228f, 24f, 10f);

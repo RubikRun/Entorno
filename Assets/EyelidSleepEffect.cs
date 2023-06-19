@@ -6,7 +6,7 @@ public class EyelidSleepEffect : MonoBehaviour
 {
     SpriteRenderer eyelid;
 
-    public float speedOfSleep = 0.001f;
+    public float speedOfSleep = 0.01f;
     public float closedForTime = 0.3f;
 
     float tSleep = 0f;

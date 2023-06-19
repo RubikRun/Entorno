@@ -40,7 +40,7 @@ public class PlayerHealth : MonoBehaviour
 
     public void HealByCat()
     {
-        healthManager.Heal(0.02f);
+        healthManager.Heal(0.06f);
     }
 
     private void HandleDeath()
