@@ -6,3 +6,5 @@ jump - Space
 pet cat - P  
 turn to square - Q  
 sleep to next day - N  
+
+Gameplay of v1.0: https://youtu.be/tRwpfBMca2c
