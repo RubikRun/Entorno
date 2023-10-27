@@ -8,3 +8,4 @@ turn to square - Q
 sleep to next day - N  
 
 Gameplay of v1.0: https://youtu.be/tRwpfBMca2c
+![entorno-thumbnail](https://github.com/RubikRun/Entorno/assets/32416009/57bc2363-95e4-42df-99b2-601ef5ec7a4e)
